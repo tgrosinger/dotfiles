@@ -16,6 +16,7 @@
 #Change History:
 #  Date        Author         Description
 #  ----------  -------------- ----------------------------------------------
+#  2014-10-21  agrosinger     Removing old ssh public key and emacs config
 #  2014-05-28  agrosinger     Adding local bin directory
 #  2014-01-13  agrosinger     Added support for using the ZIP instead of git
 #  2014-01-04  agrosinger     Updated to two mode operation
@@ -60,16 +61,6 @@ function performSetup() {
         mkdir bin
     fi
 
-    echo "Adding id_rsa.pub to authorized keys if necessary"
-    if [ ! -d .ssh ]; then
-        mkdir .ssh
-    fi
-    if [ ! -e ".ssh/authorized_keys" ]; then
-        cp ${REPO_DIR}/.ssh/id_rsa.pub .ssh/authorized_keys
-    elif ! grep -f ${REPO_DIR}/.ssh/id_rsa.pub .ssh/authorized_keys; then
-        cat ${REPO_DIR}/.ssh/id_rsa.pub >> .ssh/authorized_keys
-    fi
-    
     echo "Linking shell configs..."
     linkFile ".bashrc"
 
@@ -78,26 +69,22 @@ function performSetup() {
     createDirectory ".vim"
     createDirectory ".vim/swaps"
     createDirectory ".vim/backups"
-    
+
     echo "Linking Git..."
     linkFile ".gitconfig"
-    
+
     echo "Linking tmux..."
     linkFile ".tmux.conf"
 
     echo "Linking inputrc..."
     linkFile ".inputrc"
-    
+
     echo "Linking lein..."
     createDirectory ".lein"
     ln -s ${REPO_DIR}/profiles.clj .lein/profiles.clj;
 
     echo "Linking Maven Illuminate..."
     ln -s ${REPO_DIR}/maven-illuminate.sh bin/maven-illuminate.sh
-
-    echo "Linking emacs"
-    createDirectory ".emacs.d"
-    ln -s ${REPO_DIR}/init.el .emacs.d/init.el
 
     popd > /dev/null
 }
