@@ -45,7 +45,7 @@ nnoremap <F8> :TagbarToggle<cr> " Toggle the tagbar
 " Nerdtree
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
-let g:nerdtree_tabs_open_on_console_startup=1
+"let g:nerdtree_tabs_open_on_console_startup=1
 nnoremap <F7> :NERDTreeTabsToggle<cr> " Toggle the NERDTree
 
 " Airline
