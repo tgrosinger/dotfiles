@@ -20,14 +20,6 @@ then
     export PATH=$PATH:${HOME}/bin
 fi
 
-# Maven
-source ${HOME}/bin/maven-illuminate.sh
-alias mvnc="mvn-c clean"
-alias mvnp="mvn-c clean package"
-alias mvni="mvn-c clean install"
-alias mvna="mvn-c clean assembly:assembly"
-alias mvnd="mvn-c clean dependency:copy-dependencies"
-
 # Computer information & control
 alias df="df -h"
 
