@@ -61,6 +61,11 @@ function performSetup() {
         mkdir bin
     fi
 
+    if [ ! -d .config ]; then
+        echo "Creating a .config directory..."
+        mkdir .config
+    fi
+
     echo "Linking shell configs..."
     linkFile ".bashrc"
 
@@ -79,12 +84,9 @@ function performSetup() {
     echo "Linking inputrc..."
     linkFile ".inputrc"
 
-    echo "Linking lein..."
-    createDirectory ".lein"
-    ln -s ${REPO_DIR}/profiles.clj .lein/profiles.clj;
-
-    echo "Linking Maven Illuminate..."
-    ln -s ${REPO_DIR}/maven-illuminate.sh bin/maven-illuminate.sh
+    echo "Linking peco..."
+    createDirectory ".config/peco"
+    linkFile ".config/peco/config.json"
 
     popd > /dev/null
 }
