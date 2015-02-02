@@ -76,6 +76,7 @@ let g:undotree_SplitWidth = 30
 NeoBundle 'fatih/vim-go'
 au FileType go nmap <Leader>gb <Plug>(go-doc)
 au FileType go nmap <Leader>gd <Plug>(go-def-tab)
+let g:go_fmt_command = "goimports"
 
 " Python Support
 NeoBundle 'klen/python-mode'

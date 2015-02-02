@@ -12,6 +12,7 @@
   cr = difftool --dir-diff
   type = cat-file -t
   dump = cat-file -p
+  hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
 [push]
 	default = simple
 [core]
