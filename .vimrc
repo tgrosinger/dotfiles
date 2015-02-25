@@ -15,15 +15,10 @@ call neobundle#begin(expand('/home/tgrosinger/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " My Bundles here:
-NeoBundle 'gmarik/Vundle.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tacahiroy/ctrlp-funky'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'reedes/vim-litecorrect'
 NeoBundle 'reedes/vim-wordy'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-fugitive'
@@ -34,6 +29,7 @@ NeoBundle 'sirver/ultisnips'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'justinmk/vim-sneak'
 
 " Color Scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -66,11 +62,6 @@ if has('statusline')
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
-
-" UndoTree
-NeoBundle 'mbbill/undotree'
-nnoremap <F5> :UndotreeToggle<cr> " Show the undo tree
-let g:undotree_SplitWidth = 30
 
 " Golang Support
 NeoBundle 'fatih/vim-go'
@@ -128,7 +119,7 @@ cmap w!! w !sudo tee % >/dev/null
 
 " JSON Support
 nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-let g:vim_json_syntax_conceal = 0
+autocmd BufNewFile,BufRead *.json set ft=javascript
 
 """
 " Git Related Settings
