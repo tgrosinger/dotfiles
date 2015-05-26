@@ -74,6 +74,8 @@ function performSetup() {
     createDirectory ".vim"
     createDirectory ".vim/swaps"
     createDirectory ".vim/backups"
+    echo "You should install Neobundle to install your Vim plugins. Use this command:"
+    echo "curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh"
 
     echo "Linking Git..."
     linkFile ".gitconfig"
@@ -87,6 +89,14 @@ function performSetup() {
     echo "Linking peco..."
     createDirectory ".config/peco"
     linkFile ".config/peco/config.json"
+
+    echo "Linking Xmodmap..."
+    linkFile ".Xmodmap"
+
+    echo "Linking i3..."
+    createDirectory ".i3"
+    linkFile ".i3status.conf"
+    linkFile ".i3/config"
 
     popd > /dev/null
 }

@@ -14,6 +14,10 @@ alias tmux="tmux -2"
 alias grep="grep --color=auto"
 alias extract="tar xvf"
 
+# VPN
+alias connect="sudo openvpn --config $HOME/home.ovpn"
+alias connect-noroute="sudo openvpn --config $HOME/home.ovpn --route-nopull && sudo ip route add 192.168.0.0/24 dev tun0"
+
 # Adding applications to path
 if [[ -d ${HOME}/bin ]];
 then

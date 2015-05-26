@@ -18,18 +18,32 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tacahiroy/ctrlp-funky'
 NeoBundle 'reedes/vim-wordy'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'idanarye/vim-merginal'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'sirver/ultisnips'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'justinmk/vim-sneak'
+NeoBundle 'blueyed/vim-diminactive'
+
+" Tab Completion
+NeoBundle 'ervandew/supertab'
+NeoBundle 'sirver/ultisnips'
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
 
 " Color Scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -85,6 +99,10 @@ let g:ctrlp_user_command = {
         \ },
     \ 'fallback': 'find %s -type f'
     \ }
+
+NeoBundle 'tacahiroy/ctrlp-funky'
+nnoremap <Leader>fu :CtrlPFunky<Cr>
+let g:ctrlp_funky_syntax_highlight = 1
 
 " Required:
 call neobundle#end()
@@ -160,7 +178,7 @@ if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"
     let g:solarized_visibility="normal"
     color solarized
 endif
-highlight ColorColumn ctermbg=24
+highlight ColorColumn ctermbg=0 guibg=#eee8d5
 
 " Command line
 set wildmenu                    " Show a menu rather than auto-completing
@@ -189,6 +207,12 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>tt :tabnext<cr>
+
+" moving between splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 " backup
 set backup
