@@ -1,7 +1,7 @@
 
 # Navigation
 if [[ ! "$OSTYPE" == darwin* ]];
-then 
+then
     alias ls="ls --color=auto"
 fi
 alias c="clear"
@@ -72,6 +72,19 @@ function fb() {
         echo "(f)ind by (b)ody"
         echo "usage: fb [query] [extension]"
         echo "Where query is the string to search for and extension is optional restriction on what files to search"
+    fi
+}
+
+# wificonnect
+# usage: wificonnect <ssid> <password>
+# Connects the computer to the provided network
+# Assumes the network interface is wlan0
+function wificonnect() {
+    if [ $# -ne 2]; then
+        echo "wificonnect"
+        echo "usage: wificonnect <ssid> <password>"
+    else
+        nmcli d wifi connect $1 password $2 iface wlan0
     fi
 }
 
