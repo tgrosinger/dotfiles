@@ -25,3 +25,5 @@
     tool = meld
 [branch]
     autosetuprebase = always
+[pull]
+	rebase = true
