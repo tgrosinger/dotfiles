@@ -16,7 +16,16 @@ alias extract="tar xvf"
 
 # VPN
 alias connect="sudo openvpn --config $HOME/home.ovpn"
-alias connect-noroute="sudo openvpn --config $HOME/home.ovpn --route-nopull && sudo ip route add 192.168.0.0/24 dev tun0"
+
+function sshhome() {
+    sudo echo "logged in..."
+    sudo openvpn --config $HOME/home.ovpn --route-nopull &
+    sleep 5
+    sudo ip route add 192.168.0.0/24 dev tun0
+    ssh firefly -X -C
+
+    fg
+}
 
 # Adding applications to path
 if [[ -d ${HOME}/bin ]];
@@ -39,6 +48,10 @@ if [[ -f ${HOME}/.bashrc_local ]];
 then
     source ${HOME}/.bashrc_local
 fi
+
+#Golang
+
+alias gobrowser="godoc -http=:6060 -analysis=\"type,pointer\" -play=true -ex=true"
 
 # Functions
 
