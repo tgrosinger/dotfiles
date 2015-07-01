@@ -1,4 +1,6 @@
-"NeoBundle Scripts-----------------------------
+" vim: foldmethod=marker
+
+"NeoBundle Setup {{{1
 if has('vim_starting')
   set nocompatible               " Be iMproved
   filetype off          " turn this off for a minute
@@ -14,7 +16,7 @@ call neobundle#begin(expand('/home/tgrosinger/.vim/bundle'))
 " Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-" My Bundles here:
+" NeoBundle Packages without settings {{{1
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
@@ -29,9 +31,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'justinmk/vim-sneak'
-NeoBundle 'blueyed/vim-diminactive'
 
-" Tab Completion
+" Tab Completion {{{1
 NeoBundle 'ervandew/supertab'
 NeoBundle 'sirver/ultisnips'
 
@@ -45,20 +46,20 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
 
-" Color Scheme
+" Color Scheme {{{1
 NeoBundle 'altercation/vim-colors-solarized'
 
-" Tagbar
+" Tagbar {{{1
 NeoBundle 'majutsushi/tagbar'
 nnoremap <F8> :TagbarToggle<cr> " Toggle the tagbar
 
-" Nerdtree
+" Nerdtree {{{1
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 "let g:nerdtree_tabs_open_on_console_startup=1
 nnoremap <F7> :NERDTreeTabsToggle<cr> " Toggle the NERDTree
 
-" Airline
+" Airline {{{1
 NeoBundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1 " Tab bar at top
@@ -77,20 +78,22 @@ if has('statusline')
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
-" Golang Support
+" Golang Support {{{1
 NeoBundle 'fatih/vim-go'
 au FileType go nmap <Leader>gb <Plug>(go-doc)
-au FileType go nmap <Leader>gd <Plug>(go-def-tab)
+au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
+let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 
-" Python Support
+" Python Support {{{1
 NeoBundle 'klen/python-mode'
 au FileType python let g:pymode_doc_bind = "<Leader>gb"
 au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
 au FileType python let g:pymode_folding = 0
 
-" Ctrl+P
+" Ctrl+P {{{1
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'tacahiroy/ctrlp-funky'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_user_command = {
@@ -100,10 +103,11 @@ let g:ctrlp_user_command = {
     \ 'fallback': 'find %s -type f'
     \ }
 
-NeoBundle 'tacahiroy/ctrlp-funky'
 nnoremap <Leader>fu :CtrlPFunky<Cr>
 let g:ctrlp_funky_syntax_highlight = 1
 
+
+" NeoBundle Cleanup {{{1
 " Required:
 call neobundle#end()
 
@@ -113,63 +117,25 @@ filetype plugin indent on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
-"End NeoBundle Scripts-------------------------
 
-syntax on                 " Turn on syntax highlighting
-set spell                 " Turn on spellchecking
-set number                " Turn on line numbers
-set showmode              " Display the current mode
-
-set history=1000          " Greatly increase the size of the history (from 20)
-set iskeyword-=.          " '.' is an end of word designator
-set iskeyword-=#          " '#' is an end of word designator
-set iskeyword-=-          " '-' is an end of word designator
-
-" Enable Ctrl+hjkl navigation between splits
-map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_
-map <C-H> <C-W>h<C-W>_
-map <C-L> <C-W>l<C-W>_
-
-let g:clang_user_options='|| exit 0'
-
-cmap w!! w !sudo tee % >/dev/null
-
-" JSON Support
-nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-autocmd BufNewFile,BufRead *.json set ft=javascript
-
-"""
-" Git Related Settings
-"""
-
-highlight clear SignColumn      " SignColumn should match background
-highlight clear LineNr          " Current line number row will have same background color in relative mode
-
-" Instead of reverting the cursor to the last position in the buffer, we
-" set it to the first line when editing a git commit message
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
-""
-" Look and Feel
-"""
-
+" Appearance {{{1
 set background=dark
 set cursorline                  " Highlight the current line
 set showmatch                   " Show matching brackets/parenthesis
 set hlsearch                    " Highlight search terms
+syntax on                       " Turn on syntax highlighting
+set spell                       " Turn on spellchecking
+set number                      " Turn on line numbers
 
-highlight clear SignColumn      " SignColumn should match background
-highlight clear LineNr          " Current line number row will have same background color in relative mode
 let g:CSApprox_hook_post = ['hi clear SignColumn']
 highlight clear CursorLineNr    " Remove highlight color from current line number
+highlight clear SignColumn      " SignColumn should match background
+highlight clear LineNr          " Current line number row will have same background color in relative mode
 set textwidth=80
 set colorcolumn=+1
 
 set list                        " Highlight white-space characters
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " but only the ones we don't want
-
-set pastetoggle=<F6>
 
 if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
     let g:solarized_termcolors=256
@@ -180,18 +146,7 @@ if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"
 endif
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
 
-" Command line
-set wildmenu                    " Show a menu rather than auto-completing
-
-" leader
-let mapleader = ","
-let g:mapleader = ","
-
-" some shortcuts
-:nmap \n :setlocal number!<CR>
-:nmap \p :set paste!<CR>
-
-" tabs
+" Tabs {{{1
 noremap <leader>1 1gt
 noremap <leader>2 2gt
 noremap <leader>3 3gt
@@ -208,13 +163,26 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>tt :tabnext<cr>
 
-" moving between splits
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" Splits {{{1
+map <C-J> <C-W>j<C-W>_
+map <C-K> <C-W>k<C-W>_
+map <C-H> <C-W>h<C-W>_
+map <C-L> <C-W>l<C-W>_
 
-" backup
+" Whitespace {{{1
+set tabstop=4
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
+set smartindent
+
+" Search {{{1
+set ignorecase
+set smartcase
+set incsearch
+
+" Metadata {{{1
 set backup
 set backupdir=$HOME/.vim/backups
 set directory=$HOME/.vim/swaps
@@ -226,13 +194,33 @@ if has('persistent_undo')
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
 
-" indenting
-set tabstop=4
-set softtabstop=4
-set expandtab
-set shiftwidth=4
-set autoindent
-set smartindent
+" Other Settings {{{1
+
+set history=1000          " Greatly increase the size of the history (from 20)
+set iskeyword-=.          " '.' is an end of word designator
+set iskeyword-=#          " '#' is an end of word designator
+set iskeyword-=-          " '-' is an end of word designator
+
+
+let g:clang_user_options='|| exit 0'
+
+cmap w!! w !sudo tee % >/dev/null
+
+" JSON Support
+nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+autocmd BufNewFile,BufRead *.json set ft=javascript
+
+
+" Instead of reverting the cursor to the last position in the buffer, we
+" set it to the first line when editing a git commit message
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+set pastetoggle=<F6>
+
+set wildmenu                    " Show a menu rather than auto-completing
+let mapleader = ","
+let g:mapleader = ","
+
 
 " autocompletion
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
@@ -244,9 +232,4 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
-" search
-set ignorecase
-set smartcase
-set incsearch
 
