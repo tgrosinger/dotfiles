@@ -20,11 +20,8 @@ alias connect="sudo openvpn --config $HOME/home.ovpn"
 function sshhome() {
     sudo echo "logged in..."
     sudo openvpn --config $HOME/home.ovpn --route-nopull &
-    sleep 5
+    sleep 4
     sudo ip route add 192.168.0.0/24 dev tun0
-    ssh firefly -X -C
-
-    fg
 }
 
 # Adding applications to path

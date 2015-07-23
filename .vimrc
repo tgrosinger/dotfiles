@@ -82,7 +82,8 @@ endif
 NeoBundle 'fatih/vim-go'
 au FileType go nmap <Leader>gb <Plug>(go-doc)
 au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
-let g:go_auto_type_info = 1
+au FileType go nmap <Leader>gi <Plug>(go-info)
+let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
 
 " Python Support {{{1
