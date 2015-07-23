@@ -1,0 +1,16 @@
+'atom-text-editor:not(mini).autocomplete-active':
+  'ctrl-p': 'core:move-up'
+  'ctrl-n': 'core:move-down'
+
+'.vim-mode.command-mode:not(.mini)':
+  'ctrl-f': 'core:page-down'
+  '/': 'find-and-replace:show'
+
+'atom-workspace':
+  'ctrl-o': 'last-cursor-position:previous'
+  'ctrl-i': 'last-cursor-position:next'
+  '': 'application:open-file'
+
+'atom-text-editor.vim-mode':
+  'ctrl-h': 'window:focus-pane-on-left'
+  'ctrl-l': 'window:focus-pane-on-right'

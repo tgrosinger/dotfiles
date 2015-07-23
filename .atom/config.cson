@@ -1,0 +1,16 @@
+"*":
+  "exception-reporting":
+    userId: "69378063-597c-7e9a-9aca-e1a0dd559698"
+  welcome:
+    showOnStartup: false
+  core: {}
+  "go-plus": {}
+  "go-playground": {}
+  "autocomplete-plus":
+    backspaceTriggersAutocomplete: true
+  "go-rename": {}
+  editor:
+    invisibles: {}
+    fontSize: 15
+  "vim-mode": {}
+  "vim-surround": {}
