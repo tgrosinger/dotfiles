@@ -16,8 +16,7 @@ workspace 2 output DVI-I-1
 workspace 3 output DVI-I-1
 workspace 9 output DVI-I-1
 
-exec --no-startup-id i3-msg 'workspace 2; exec firefox'
-exec --no-startup-id i3-msg 'workspace 3; exec google-chrome'
+exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
 #exec --no-startup-id i3-msg 'workspace 9; exec virtualbox; exec gnome-terminal; workspace 2'
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'exec workrave'

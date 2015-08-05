@@ -29,8 +29,18 @@ NeoBundle 'godlygeek/tabular'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'justinmk/vim-sneak'
+
+" JSON Support {{{1
+NeoBundle 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
+
+" Tmux Integration {{{1
+NeoBundle 'christoomey/vim-tmux-navigator'
+nnoremap <silent> <C-Left> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-Down> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-Up> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-Right> :TmuxNavigateRight<cr>
 
 " Tab Completion {{{1
 NeoBundle 'ervandew/supertab'
@@ -53,11 +63,15 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'majutsushi/tagbar'
 nnoremap <F8> :TagbarToggle<cr> " Toggle the tagbar
 
+" DelimitMate {{{1
+NeoBundle 'Raimondi/delimitMate'
+let delimitMate_expand_cr = 1
+
 " Nerdtree {{{1
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
 "let g:nerdtree_tabs_open_on_console_startup=1
-nnoremap <F7> :NERDTreeTabsToggle<cr> " Toggle the NERDTree
+nnoremap <C-T> :NERDTreeTabsToggle<cr> " Toggle the NERDTree
 
 " Airline {{{1
 NeoBundle 'bling/vim-airline'
@@ -87,10 +101,10 @@ let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
 
 " Python Support {{{1
-NeoBundle 'klen/python-mode'
-au FileType python let g:pymode_doc_bind = "<Leader>gb"
-au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
-au FileType python let g:pymode_folding = 0
+"NeoBundle 'klen/python-mode'
+"au FileType python let g:pymode_doc_bind = "<Leader>gb"
+"au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
+"au FileType python let g:pymode_folding = 0
 
 " Ctrl+P {{{1
 NeoBundle 'kien/ctrlp.vim'
@@ -206,11 +220,6 @@ set iskeyword-=-          " '-' is an end of word designator
 let g:clang_user_options='|| exit 0'
 
 cmap w!! w !sudo tee % >/dev/null
-
-" JSON Support
-nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
-autocmd BufNewFile,BufRead *.json set ft=javascript
-
 
 " Instead of reverting the cursor to the last position in the buffer, we
 " set it to the first line when editing a git commit message

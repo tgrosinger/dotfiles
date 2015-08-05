@@ -98,11 +98,6 @@ function performSetup() {
     linkFile ".i3status.conf"
     linkFile ".i3/config"
 
-    echo  "Linking atom..."
-    createDirectory ".atom"
-    linkFile ".atom/config.cson"
-    linkFile ".atom/keymap.cson"
-
     popd > /dev/null
 }
 
