@@ -20,16 +20,47 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'reedes/vim-wordy'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'idanarye/vim-merginal'
-NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'justinmk/vim-sneak'
+
+" vimproc - support for async in Unite {{{1
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
+
+" Unite {{{1
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'lambdalisue/unite-grep-vcs'
+
+let g:unite_source_history_yank_enable = 1
+let g:unite_data_directory = "~/.unite"
+
+nnoremap [unite] <Nop>
+nmap <space> [unite]
+
+" Lots of examples:
+" https://github.com/terryma/dotfiles/blob/master/.vimrc
+
+nnoremap <silent> [unite]<space> :<C-u>Unite
+      \ -buffer-name=files -start-insert -default-action=vsplitswitch buffer file_mru bookmark file_rec/async<CR>
+nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
+nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks   -quick-match history/yank<CR>
+nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers -default-action=vsplitswitch -auto-preview buffer<CR>
+nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=git-grep -ignorecase -auto-preview grep/git<CR>
+
 
 " JSON Support {{{1
 NeoBundle 'elzr/vim-json'
@@ -59,19 +90,9 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
 " Color Scheme {{{1
 NeoBundle 'altercation/vim-colors-solarized'
 
-" Tagbar {{{1
-NeoBundle 'majutsushi/tagbar'
-nnoremap <F8> :TagbarToggle<cr> " Toggle the tagbar
-
 " DelimitMate {{{1
 NeoBundle 'Raimondi/delimitMate'
 let delimitMate_expand_cr = 1
-
-" Nerdtree {{{1
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'jistr/vim-nerdtree-tabs'
-"let g:nerdtree_tabs_open_on_console_startup=1
-nnoremap <C-T> :NERDTreeTabsToggle<cr> " Toggle the NERDTree
 
 " Airline {{{1
 NeoBundle 'bling/vim-airline'
@@ -106,25 +127,13 @@ let g:go_fmt_command = "goimports"
 "au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
 "au FileType python let g:pymode_folding = 0
 
-" Ctrl+P {{{1
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'tacahiroy/ctrlp-funky'
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files'],
-        \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
-
-nnoremap <Leader>fu :CtrlPFunky<Cr>
-let g:ctrlp_funky_syntax_highlight = 1
-
-
 " NeoBundle Cleanup {{{1
 " Required:
 call neobundle#end()
+
+" This line is for Unite, but must be called after neobundle#end
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
 
 " Required:
 filetype plugin indent on
@@ -231,6 +240,8 @@ set wildmenu                    " Show a menu rather than auto-completing
 let mapleader = ","
 let g:mapleader = ","
 
+" <Leader>e: Fast editing of the .vimrc
+nnoremap <Leader>e :e! ~/.dotfiles/.vimrc<cr>
 
 " autocompletion
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
