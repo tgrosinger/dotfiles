@@ -61,6 +61,13 @@ nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks   -quick-match history
 nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers -default-action=vsplitswitch -auto-preview buffer<CR>
 nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=git-grep -ignorecase -auto-preview grep/git<CR>
 
+" Smooth Scrolling {{{1
+NeoBundle 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 2, 3)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 2, 3)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 2, 3)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 2, 3)<CR>
+
 
 " JSON Support {{{1
 NeoBundle 'elzr/vim-json'
