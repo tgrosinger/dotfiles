@@ -25,49 +25,29 @@ NeoBundle 'reedes/vim-wordy'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'idanarye/vim-merginal'
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'airblade/vim-gitgutter'
 
-" vimproc - support for async in Unite {{{1
-NeoBundle 'Shougo/vimproc.vim', {
+" Ctrl-p {{{1
+NeoBundle 'kien/ctrlp.vim'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files . -co --exclude-standard'],
+        \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
+
+" YouCompleteMe {{{1
+NeoBundle 'Valloric/YouCompleteMe', {
 \ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
+\     'unix'  : './install.sh --gocode-completer',
+\     'linux' : './install.sh --gocode-completer',
 \    },
 \ }
-
-" Unite {{{1
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'lambdalisue/unite-grep-vcs'
-
-let g:unite_source_history_yank_enable = 1
-let g:unite_data_directory = "~/.unite"
-
-nnoremap [unite] <Nop>
-nmap <space> [unite]
-
-" Lots of examples:
-" https://github.com/terryma/dotfiles/blob/master/.vimrc
-
-nnoremap <silent> [unite]<space> :<C-u>Unite
-      \ -buffer-name=files -start-insert -default-action=vsplitswitch buffer file_mru bookmark file_rec/async<CR>
-nnoremap <silent> [unite]o :<C-u>Unite -buffer-name=outline -vertical outline<CR>
-nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks   -quick-match history/yank<CR>
-nnoremap <silent> [unite]b :<C-u>Unite -buffer-name=buffers -default-action=vsplitswitch -auto-preview buffer<CR>
-nnoremap <silent> [unite]g :<C-u>Unite -buffer-name=git-grep -ignorecase -auto-preview grep/git<CR>
-
-" Smooth Scrolling {{{1
-NeoBundle 'terryma/vim-smooth-scroll'
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 2, 3)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 2, 3)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 2, 3)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 2, 3)<CR>
-
+let g:ycm_complete_in_strings = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 
 " JSON Support {{{1
 NeoBundle 'elzr/vim-json'
@@ -138,10 +118,6 @@ let g:go_fmt_command = "goimports"
 " Required:
 call neobundle#end()
 
-" This line is for Unite, but must be called after neobundle#end
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-
-
 " Required:
 filetype plugin indent on
 
@@ -163,6 +139,7 @@ highlight clear CursorLineNr    " Remove highlight color from current line numbe
 highlight clear SignColumn      " SignColumn should match background
 highlight clear LineNr          " Current line number row will have same background color in relative mode
 set textwidth=80
+au FileType json setlocal textwidth=150
 set colorcolumn=+1
 
 set list                        " Highlight white-space characters
@@ -225,6 +202,13 @@ if has('persistent_undo')
     set undoreload=10000        " Maximum number lines to save for undo on a buffer reload
 endif
 
+" Git {{{1
+
+au FileType gitcommit set tw=72 " Override the line length for git commits
+
+" Always start the cursor at the top left corner in a commit message
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
 " Other Settings {{{1
 
 set history=1000          " Greatly increase the size of the history (from 20)
@@ -235,20 +219,13 @@ set iskeyword-=-          " '-' is an end of word designator
 
 let g:clang_user_options='|| exit 0'
 
-cmap w!! w !sudo tee % >/dev/null
-
-" Instead of reverting the cursor to the last position in the buffer, we
-" set it to the first line when editing a git commit message
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
-set pastetoggle=<F6>
-
 set wildmenu                    " Show a menu rather than auto-completing
 let mapleader = ","
 let g:mapleader = ","
 
 " <Leader>e: Fast editing of the .vimrc
 nnoremap <Leader>e :e! ~/.dotfiles/.vimrc<cr>
+nnoremap <Leader>r :so ~/.dotfiles/.vimrc<cr>
 
 " autocompletion
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
