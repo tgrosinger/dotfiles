@@ -13,14 +13,6 @@
 # Mode 2: Standalone or through Curl in which case all required files will be
 #         downloaded automatically to `~/.dotfiles` before creating symlinks.
 #
-#Change History:
-#  Date        Author         Description
-#  ----------  -------------- ----------------------------------------------
-#  2014-10-21  agrosinger     Removing old ssh public key and emacs config
-#  2014-05-28  agrosinger     Adding local bin directory
-#  2014-01-13  agrosinger     Added support for using the ZIP instead of git
-#  2014-01-04  agrosinger     Updated to two mode operation
-#  2013-04-06  agrosinger     Adding Clojure profiles.clj
 ################################################################################
 
 DOTFILES_DIR="${HOME}/.dotfiles"
@@ -98,6 +90,9 @@ function performSetup() {
     linkFile ".i3status.conf"
     linkFile ".i3/config"
 
+    echo "Linking bin files"
+    linkFile "bin/diff-highlight"
+
     popd > /dev/null
 }
 
@@ -128,7 +123,6 @@ else
     if which git; then
         # Git is installed, clone the repository using read-only url
         if [ -d ${DOTFILES_DIR} ]; then
-            
             if [ -d ${DOTFILES_DIR}/.git ]; then
                 echo "Updating dotfiles repository in ${DOTFILES_DIR}"
                 pushd ${DOTFILES_DIR} > /dev/null
@@ -157,7 +151,7 @@ else
         mkdir ${DOTFILES_DIR}
         curl -L ${REPO_TAR} | tar zx --strip 1 --directory ${DOTFILES_DIR}
     fi
-    
+
     REPO_DIR="${DOTFILES_DIR}"
     performSetup ${HOME}
     echo "Done! Restart your shell to see changes"

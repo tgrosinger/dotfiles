@@ -105,8 +105,10 @@ NeoBundle 'fatih/vim-go'
 au FileType go nmap <Leader>gb <Plug>(go-doc)
 au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gi <Plug>(go-info)
+au FileType go nmap <Leader>gl <Plug>(go-metalinter)
 let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'dupl', 'ineffassign']
 
 " Python Support {{{1
 "NeoBundle 'klen/python-mode'

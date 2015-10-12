@@ -3,27 +3,35 @@
 	email = tony@grosinger.net
 [color]
     ui = auto
+
 [alias]
-  co = checkout
-  amend = commit --amend
-  c = commit
-  s = status -sb
-  d = diff --color-words --minimal
-  b = branch
-  pp = log --color --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cr) %Creset\t%s %C(bold blue)<%an> %C(yellow)%d%Creset' --abbrev-commit
-  cr = difftool --dir-diff
-  type = cat-file -t
-  dump = cat-file -p
-  ff = merge --ff-only
-  hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
+    co = checkout
+    amend = commit --amend
+    aa = add -A .
+    c = commit
+    s = status -sb
+    d = diff --color-words --minimal
+    b = branch
+    pp = log --color --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cr) %Creset\t%s %C(bold blue)<%an> %C(yellow)%d%Creset' --abbrev-commit
+    cr = difftool --dir-diff
+    type = cat-file -t
+    dump = cat-file -p
+    hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
+
 [push]
-	default = simple
+    default = simple
+
 [core]
-	editor = vim
-	pager = less -F -R -X -x1,5
+    editor = vim
+    excludesfile = /home/tgrosinger/.gitignore_global
+    pager = bash -lc 'diff-highlight | less -F -R -X -x1,5' -
+
 [diff]
     tool = meld
+
 [branch]
     autosetuprebase = always
+
 [pull]
-	rebase = true
+    rebase = true
+

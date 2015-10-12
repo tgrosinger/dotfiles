@@ -13,6 +13,7 @@ alias rmr="rm -r"
 alias tmux="tmux -2"
 alias grep="grep --color=auto"
 alias extract="tar xvf"
+alias df="df -h"
 
 # VPN
 alias connect="sudo openvpn --config $HOME/home.ovpn"
@@ -30,23 +31,13 @@ then
     export PATH=$PATH:${HOME}/bin
 fi
 
-# Computer information & control
-alias df="df -h"
-
-# Ruby
-if [[ -d ${HOME}/.rvm ]];
-then
-    PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-    source ${HOME}/.rvm/scripts/rvm
-fi
-
 # Add a local un-tracked bash-rc if present
 if [[ -f ${HOME}/.bashrc_local ]];
 then
     source ${HOME}/.bashrc_local
 fi
 
-#Golang
+# Golang
 
 alias gobrowser="godoc -http=:6060 -analysis=\"type,pointer\" -play=true -ex=true"
 
