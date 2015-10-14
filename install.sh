@@ -26,8 +26,7 @@ REPO_TAR="${GIT_REPO_BASE}/archive/master.tar.gz"
 
 # Remove a file if it exists then create a symlink to the one contained in ${REPO_DIR}
 function linkFile() {
-    if [ -e $1 ]; then rm -rf $1; fi
-    ln -s ${REPO_DIR}/$1 $1;
+    ln -fns ${REPO_DIR}/$1 $1;
 }
 
 # Create a directory named by first parameter. Delete directory first if it already exists.
@@ -62,12 +61,10 @@ function performSetup() {
     linkFile ".bashrc"
 
     echo "Linking vim..."
+    linkFile ".vim"
     linkFile ".vimrc"
-    createDirectory ".vim"
-    createDirectory ".vim/swaps"
-    createDirectory ".vim/backups"
-    echo "You should install Neobundle to install your Vim plugins. Use this command:"
-    echo "curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh"
+    linkFile ".nvim"
+    linkFile ".nvimrc"
 
     echo "Linking Git..."
     linkFile ".gitconfig"
@@ -78,22 +75,30 @@ function performSetup() {
     echo "Linking inputrc..."
     linkFile ".inputrc"
 
-    echo "Linking peco..."
-    createDirectory ".config/peco"
-    linkFile ".config/peco/config.json"
-
-    echo "Linking Xmodmap..."
-    linkFile ".Xmodmap"
-
     echo "Linking i3..."
-    createDirectory ".i3"
+    linkFile ".i3"
     linkFile ".i3status.conf"
-    linkFile ".i3/config"
 
     echo "Linking bin files"
+    linkFile "bin/git-safedel"
     linkFile "bin/diff-highlight"
 
     popd > /dev/null
+
+    echo "Installing some default applications"
+    sudo add-apt-repository ppa:neovim-ppa/unstable
+    sudo apt-get update
+    sudo apt-get install -y python-dev python-pip python3-dev python3-pip neovim
+    sudo pip3 install -U neovim
+    sudo pip2 install -U neovim
+
+    echo "Setting defaults"
+    sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+    sudo update-alternatives --config vi
+    sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+    sudo update-alternatives --config vim
+    sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+    sudo update-alternatives --config editor
 }
 
 ################################################################################

@@ -46,7 +46,7 @@ alias gobrowser="godoc -http=:6060 -analysis=\"type,pointer\" -play=true -ex=tru
 # (f)ind by (n)ame
 # usage: fn foo
 # to find all files containing 'foo' in the name
-function fn() { 
+function fn() {
 	if [ $# -eq 2 ]; then
 		sudo find $1 -name $2
 	elif [ $# -eq 1 ]; then

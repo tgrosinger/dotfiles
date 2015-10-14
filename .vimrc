@@ -1,34 +1,25 @@
 " vim: foldmethod=marker
-
-"NeoBundle Setup {{{1
-if has('vim_starting')
-  set nocompatible               " Be iMproved
-  filetype off          " turn this off for a minute
-
-  " Required:
-  set runtimepath+=/home/tgrosinger/.vim/bundle/neobundle.vim/
+"
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+call plug#begin()
 
-" Required:
-call neobundle#begin(expand('/home/tgrosinger/.vim/bundle'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" NeoBundle Packages without settings {{{1
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'reedes/vim-wordy'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'idanarye/vim-merginal'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'airblade/vim-gitgutter'
+" Plug packages without settings {{{1
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'reedes/vim-wordy'
+Plug 'scrooloose/syntastic'
+Plug 'idanarye/vim-merginal'
+Plug 'godlygeek/tabular'
+Plug 'airblade/vim-gitgutter'
 
 " Ctrl-p {{{1
-NeoBundle 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 let g:ctrlp_user_command = {
@@ -39,30 +30,25 @@ let g:ctrlp_user_command = {
     \ }
 
 " YouCompleteMe {{{1
-NeoBundle 'Valloric/YouCompleteMe', {
-\ 'build' : {
-\     'unix'  : './install.sh --gocode-completer',
-\     'linux' : './install.sh --gocode-completer',
-\    },
-\ }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 let g:ycm_complete_in_strings = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
 " JSON Support {{{1
-NeoBundle 'elzr/vim-json'
+Plug 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
 " Tmux Integration {{{1
-NeoBundle 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 nnoremap <silent> <C-Left> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-Down> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-Up> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-Right> :TmuxNavigateRight<cr>
 
 " Tab Completion {{{1
-NeoBundle 'ervandew/supertab'
-NeoBundle 'sirver/ultisnips'
+Plug 'ervandew/supertab'
+Plug 'sirver/ultisnips'
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -75,17 +61,24 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
 
 " Color Scheme {{{1
-NeoBundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
+let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_contrast="normal"
+let g:solarized_visibility="normal"
+set background=dark
+colorscheme solarized
+highlight ColorColumn ctermbg=0 guibg=#eee8d5
+
 
 " DelimitMate {{{1
-NeoBundle 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 let delimitMate_expand_cr = 1
 
 " Airline {{{1
-NeoBundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1 " Tab bar at top
-set t_Co=256
 if !exists('g:airline_symbols')
       let g:airline_symbols = {}
   endif
@@ -101,40 +94,33 @@ if has('statusline')
 endif
 
 " Golang Support {{{1
-NeoBundle 'fatih/vim-go'
+Plug 'fatih/vim-go'
 au FileType go nmap <Leader>gb <Plug>(go-doc)
 au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gi <Plug>(go-info)
 au FileType go nmap <Leader>gl <Plug>(go-metalinter)
 let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'dupl', 'ineffassign']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign']
+"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'dupl', 'ineffassign']
 
 " Python Support {{{1
-"NeoBundle 'klen/python-mode'
+"Plug 'klen/python-mode'
 "au FileType python let g:pymode_doc_bind = "<Leader>gb"
 "au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
 "au FileType python let g:pymode_folding = 0
 
-" NeoBundle Cleanup {{{1
-" Required:
-call neobundle#end()
-
-" Required:
+call plug#end()
 filetype plugin indent on
 
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
 " Appearance {{{1
-set background=dark
 set cursorline                  " Highlight the current line
 set showmatch                   " Show matching brackets/parenthesis
 set hlsearch                    " Highlight search terms
 syntax on                       " Turn on syntax highlighting
 set spell                       " Turn on spellchecking
 set number                      " Turn on line numbers
+set mouse=                      " Disable mouse support
 
 let g:CSApprox_hook_post = ['hi clear SignColumn']
 highlight clear CursorLineNr    " Remove highlight color from current line number
@@ -146,15 +132,6 @@ set colorcolumn=+1
 
 set list                        " Highlight white-space characters
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " but only the ones we don't want
-
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-    let g:solarized_termcolors=256
-    let g:solarized_termtrans=1
-    let g:solarized_contrast="normal"
-    let g:solarized_visibility="normal"
-    color solarized
-endif
-highlight ColorColumn ctermbg=0 guibg=#eee8d5
 
 " Tabs {{{1
 noremap <leader>1 1gt
@@ -184,8 +161,13 @@ set tabstop=4
 set softtabstop=4
 set expandtab
 set shiftwidth=4
-set autoindent
-set smartindent
+set autoindent     " Indent on paste
+set smartindent    " Indent intelligently
+set nojoinspaces   " Collapse spaces after sentences
+
+" Don't exit visual mode when indenting
+vnoremap < <gv
+vnoremap > >gv
 
 " Search {{{1
 set ignorecase
@@ -197,7 +179,6 @@ set backup
 set backupdir=$HOME/.vim/backups
 set directory=$HOME/.vim/swaps
 set undodir=$HOME/.vim/undo
-
 if has('persistent_undo')
     set undofile                " So is persistent undo ...
     set undolevels=1000         " Maximum number of changes that can be undone
