@@ -52,6 +52,10 @@ then
     export PATH=$PATH:${HOME}/bin
 fi
 
+# Computer information & control
+alias df="df -h"
+alias suspend="sudo pm-suspend"
+
 # Add a local un-tracked bash-rc if present
 if [[ -f ${HOME}/.bashrc_local ]];
 then
