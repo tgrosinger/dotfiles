@@ -63,8 +63,7 @@ function performSetup() {
     echo "Linking vim..."
     linkFile ".vim"
     linkFile ".vimrc"
-    linkFile ".nvim"
-    linkFile ".nvimrc"
+    linkFile ".config/nvim"
 
     echo "Linking Git..."
     linkFile ".gitconfig"
@@ -88,7 +87,7 @@ function performSetup() {
     echo "Installing some default applications"
     sudo add-apt-repository ppa:neovim-ppa/unstable
     sudo apt-get update
-    sudo apt-get install -y python-dev python-pip python3-dev python3-pip neovim
+    sudo apt-get install -y cmake python-dev python-pip python3-dev python3-pip neovim
     sudo pip3 install -U neovim
     sudo pip2 install -U neovim
 
