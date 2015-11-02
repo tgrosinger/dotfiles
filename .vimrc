@@ -18,6 +18,18 @@ Plug 'idanarye/vim-merginal'
 Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 
+" Undo {{{1
+Plug 'simnalamburt/vim-mundo'
+nnoremap <leader>u :GundoToggle<CR>
+
+" NERDTree {{{1
+Plug 'scrooloose/nerdtree'
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', 'node_modules']
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let NERDTreeShowHidden=1
+map  <C-e> :NERDTreeToggle<CR>
+map  <leader>e :NERDTreeFind<CR>
+
 " Ctrl-p {{{1
 Plug 'kien/ctrlp.vim'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
