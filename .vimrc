@@ -20,14 +20,14 @@ Plug 'airblade/vim-gitgutter'
 
 " Undo {{{1
 Plug 'simnalamburt/vim-mundo'
-nnoremap <leader>u :GundoToggle<CR>
+nnoremap <F3> :GundoToggle<CR>
 
 " NERDTree {{{1
 Plug 'scrooloose/nerdtree'
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', 'node_modules']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 let NERDTreeShowHidden=1
-map  <C-e> :NERDTreeToggle<CR>
+map  <F2> :NERDTreeToggle<CR>
 map  <leader>e :NERDTreeFind<CR>
 
 " Ctrl-p {{{1
@@ -117,10 +117,10 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'alignch
 "let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'dupl', 'ineffassign']
 
 " Python Support {{{1
-"Plug 'klen/python-mode'
-"au FileType python let g:pymode_doc_bind = "<Leader>gb"
-"au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
-"au FileType python let g:pymode_folding = 0
+Plug 'klen/python-mode'
+au FileType python let g:pymode_doc_bind = "<Leader>gb"
+au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
+au FileType python let g:pymode_folding = 0
 
 call plug#end()
 filetype plugin indent on
