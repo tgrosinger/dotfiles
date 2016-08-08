@@ -13,11 +13,8 @@ exec_always --no-startup-id ~/.config/monitors1.sh
 
 workspace 1 output DP-1
 workspace 2 output DVI-I-1
-workspace 3 output DVI-I-1
-workspace 9 output DVI-I-1
 
 exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
-#exec --no-startup-id i3-msg 'workspace 9; exec virtualbox; exec gnome-terminal; workspace 2'
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'exec workrave'
 
@@ -27,7 +24,8 @@ set $mod Mod1
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+font pango:roboto 9
+#font pango:DejaVu Sans Mono 8
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # The font above is very space-efficient, that is, it looks good, sharp and
