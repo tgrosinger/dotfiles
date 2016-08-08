@@ -9,6 +9,12 @@ alias ..="cd ..;"
 alias la="ls -lha"
 alias rmr="rm -r"
 
+# History
+HISTSIZE=50000
+HISTFILESIZE=50000
+HISTCONTROL=ignoredups:ignorespace
+shopt -s histappend
+
 # Applications
 alias tmux="tmux -2"
 alias grep="grep --color=auto"
