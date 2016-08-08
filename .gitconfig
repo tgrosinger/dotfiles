@@ -4,11 +4,20 @@
 [color]
     ui = auto
 
+[color "status"]
+    added = green
+    branch = white bold ul
+    changed = 9    # Bright red
+    unmerged = 11  # Bright yellow
+    untracked = 32 # Brighter blue
+
 [alias]
     co = checkout
     amend = commit --amend
+    aq = commit --amend --no-edit
     aa = add -A .
     c = commit
+    rv = review -R
     s = status -sb
     d = diff --color-words --minimal
     b = branch
@@ -17,6 +26,8 @@
     type = cat-file -t
     dump = cat-file -p
     hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
+    ri = "!f() { r=\"${1}\"; if [ \"${1}\" -eq \"${1}\" ]; then r=\"@~${1}\"; \
+                 fi >/dev/null 2>&1; git rebase -i \"${r}\"; }; f"
 
 [push]
     default = simple
@@ -28,6 +39,8 @@
 
 [diff]
     tool = meld
+    renames = copies
+    compactionHeuristic = 1
 
 [branch]
     autosetuprebase = always
@@ -35,3 +48,5 @@
 [pull]
     rebase = true
 
+[log]
+	date = local
