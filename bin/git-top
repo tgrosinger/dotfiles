@@ -1,0 +1,185 @@
+#!/usr/bin/env bash
+
+#
+# --------------------------------------------------------
+# Usage
+# --------------------------------------------------------
+#
+# git top [branch-name]
+#
+# --------------------------------------------------------
+# Summary
+# --------------------------------------------------------
+#
+# Performs a pull from origin onto master before rebasing the current branch on
+# master.
+#
+# Author: Tony Grosinger
+#
+# --------------------------------------------------------
+# Installation
+# --------------------------------------------------------
+#
+# Place the following in your .bashrc then place this file on your path.
+#
+#    _git_top() {
+#        if [[ "${COMP_LINE}" =~ ^git\ top.*$ ]]; then
+#            __gitcomp_nl "$(__git_heads)"
+#        else
+#            __git_main
+#        fi
+#    }
+#
+
+VERSION="v0.0.2"
+
+GREEN="\e[32m"
+BLUE="\e[34m"
+RED="\e[91m"
+CLEAR="\e[0m"
+
+version() {
+    echo "git top ${VERSION}"
+    echo ""
+}
+
+usage() {
+    echo "usage: git top [branch-name]"
+    echo ""
+    echo "If branch name is omitted, current branch will be updated"
+}
+
+print_cmd() {
+    echo -e "${GREEN}>> ${CLEAR}${@}"
+}
+
+print_status() {
+    echo -e "${BLUE}${@}${CLEAR}"
+}
+
+print_fatal() {
+    echo -e >&2 "${RED}Fatal: ${CLEAR}${@}"
+}
+
+exec_cmd() {
+    print_cmd ${1}
+    ${1}
+
+}
+
+require_git_repo() {
+    git rev-parse --is-inside-work-tree > /dev/null 2>&1
+
+    if [ $? != 0 ]; then
+        print_fatal "Not a git repository"
+        exit 1
+    fi
+}
+
+require_clean_work_tree() {
+    # Outputs an error to stderr if working tree is not clean, then exits
+    # Function retrieved from http://www.spinics.net/lists/git/msg142043.html
+    # http://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommited-changes
+
+    # Update the index
+    git update-index -q --ignore-submodules --refresh
+    err=0
+
+    # Disallow unstaged changes in the working tree
+    if ! git diff-files --quiet --ignore-submodules --
+    then
+        echo >&2 "cannot $1: you have unstaged changes."
+        git diff-files --name-status -r --ignore-submodules -- >&2
+        err=1
+    fi
+
+    # Disallow uncommitted changes in the index
+    if ! git diff-index --cached --quiet HEAD --ignore-submodules --
+    then
+        echo >&2 "cannot $1: your index contains uncommitted changes."
+        git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+        err=1
+    fi
+
+    if [ $err = 1 ]
+    then
+        echo >&2 "Please commit or stash them."
+        exit 1
+    fi
+}
+
+checkout() {
+    exec_cmd "git checkout -q ${1}"
+}
+
+pull_remote() {
+    checkout "master"
+    exec_cmd "git pull -r -q"
+
+    if [ $? != 0 ]; then
+        echo >&2 "Could not pull on master, please check that upstream is set and try again."
+        exit 1
+    fi
+}
+
+rebase() {
+    local startbranch=${1}
+    exec_cmd "git rebase -q master ${startbranch}"
+
+    if [ $? != 0 ]; then
+        echo >&2 "Could not rebase ${startbranch} on master, rolling back changes."
+        echo >&2 "Please manually resolve conflicts."
+
+        git rebase --abort
+        exit 1
+    fi
+}
+
+main() {
+    require_git_repo
+    local startbranch=`git rev-parse --abbrev-ref HEAD`
+
+    if [ $# = 1 ]; then
+        case "$1" in
+            "-h"|"--help")
+                usage
+                exit 0
+                ;;
+            "-v"|"--version")
+                version
+                exit 0
+                ;;
+            *)
+                startbranch=$1
+                ;;
+        esac
+    elif [ $# != 0 ]; then
+        print_fatal "Invalid number of arguments provided"
+        echo ""
+        usage
+        exit 1
+    fi
+
+    git show-ref --verify -q refs/heads/${startbranch}
+    if [ $? != 0 ]; then
+        print_fatal "Branch \"${startbranch}\" does not exist"
+        exit 1
+    fi
+
+    require_clean_work_tree
+
+    if [ ${startbranch} = "master" ]; then
+        print_status "Already on master, only performing git pull"
+        pull_remote
+    else
+        pull_remote
+        rebase $startbranch
+    fi
+
+    checkout $startbranch
+
+    print_status "Branch update complete."
+}
+
+main "$@"
+

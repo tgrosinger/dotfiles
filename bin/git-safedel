@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+
+#
+# --------------------------------------------------------
+# Usage
+# --------------------------------------------------------
+#
+# git safedel [branch-name]
+#
+# --------------------------------------------------------
+# Summary
+# --------------------------------------------------------
+#
+# Performs a safe deletion of a branch by pulling master from origin, then
+# rebasing the specified or current branch on master. Once complete, a branch
+# deletion is attempted, however aborted if the branch is not fully merged.
+#
+# Author: Tony Grosinger
+#
+# --------------------------------------------------------
+# Dependencies
+# --------------------------------------------------------
+#
+# * Git Top (Used to pull from master and rebase)
+#
+# --------------------------------------------------------
+# Installation
+# --------------------------------------------------------
+#
+# Place the following in your .bashrc then place this file on your path.
+#
+#    _git_safedel() {
+#        if [[ "${COMP_LINE}" =~ ^git\ safedel.*$ ]]; then
+#            __gitcomp_nl "$(__git_heads)"
+#        else
+#            __git_main
+#        fi
+#    }
+#
+
+VERSION="v0.0.2"
+
+GREEN="\e[32m"
+BLUE="\e[34m"
+RED="\e[91m"
+CLEAR="\e[0m"
+
+version() {
+    echo "git safedel ${VERSION}"
+    echo ""
+}
+
+usage() {
+    echo "usage: git safedel [branch-name]"
+    echo ""
+    echo "If branch name is omitted, current branch will be deleted"
+    echo "Only safe deletes are attempted. If delete fails, then command"
+    echo "only acts as a rebase against master."
+}
+
+print_cmd() {
+    echo -e "${GREEN}>> ${CLEAR}${@}"
+}
+
+print_status() {
+    echo -e "${BLUE}${@}${CLEAR}"
+}
+
+print_fatal() {
+    echo -e >&2 "${RED}Fatal: ${CLEAR}${@}"
+}
+
+exec_cmd() {
+    print_cmd ${1}
+    ${1}
+
+}
+
+require_git_repo() {
+    git rev-parse --is-inside-work-tree > /dev/null 2>&1
+
+    if [ $? != 0 ]; then
+        print_fatal "Not a git repository"
+        exit 1
+    fi
+}
+
+require_clean_work_tree() {
+    # Outputs an error to stderr if working tree is not clean, then exits
+    # Function retrieved from http://www.spinics.net/lists/git/msg142043.html
+    # http://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommited-changes
+
+    # Update the index
+    git update-index -q --ignore-submodules --refresh
+    err=0
+
+    # Disallow unstaged changes in the working tree
+    if ! git diff-files --quiet --ignore-submodules --
+    then
+        echo >&2 "cannot $1: you have unstaged changes."
+        git diff-files --name-status -r --ignore-submodules -- >&2
+        err=1
+    fi
+
+    # Disallow uncommitted changes in the index
+    if ! git diff-index --cached --quiet HEAD --ignore-submodules --
+    then
+        echo >&2 "cannot $1: your index contains uncommitted changes."
+        git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
+        err=1
+    fi
+
+    if [ $err = 1 ]
+    then
+        echo >&2 "Please commit or stash them."
+        exit 1
+    fi
+}
+
+delete_branch() {
+    local startbranch=${1}
+    exec_cmd "git checkout -q master"
+    exec_cmd "git branch -d ${startbranch}"
+
+    if [ $? != 0 ]; then
+        echo >&2 "Pull and rebase complete however branch could not be deleted."
+        echo >&2 "Please manually delete branch."
+        exit 1
+    fi
+}
+
+main() {
+    require_git_repo
+    local startbranch=`git rev-parse --abbrev-ref HEAD`
+
+    if [ $# = 1 ]; then
+        case "$1" in
+            "-h"|"--help")
+                usage
+                exit 0
+                ;;
+            "-v"|"--version")
+                version
+                exit 0
+                ;;
+            *)
+                startbranch=$1
+                ;;
+        esac
+    elif [ $# != 0 ]; then
+        print_fatal "Invalid number of arguments provided"
+        echo ""
+        usage
+        exit 1
+    fi
+
+    print_status "Attempting to delete branch: ${startbranch}"
+
+    if [ ${startbranch} = "master" ]; then
+        echo "Cannot delete branch \"master\""
+        echo "Please switch branch or provide a branch name as an argument."
+        exit 1
+    fi
+
+    git show-ref --verify -q refs/heads/${startbranch}
+    if [ $? != 0 ]; then
+        print_fatal "Branch \"${startbranch}\" does not exist"
+        exit 1
+    fi
+
+    require_clean_work_tree
+    exec_cmd "git top ${startbranch}"
+    delete_branch $startbranch
+
+    print_status "Branch deletion complete."
+}
+
+main "$@"
+

@@ -24,6 +24,14 @@ alias df="df -h"
 # VPN
 alias connect="sudo openvpn --config $HOME/home.ovpn"
 
+# enable bash completion in interactive shells
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+export TERM="xterm-256color"
+
+
 function sshhome() {
     sudo echo "logged in..."
     sudo openvpn --config $HOME/home.ovpn --route-nopull &
@@ -43,11 +51,30 @@ then
     source ${HOME}/.bashrc_local
 fi
 
-# Golang
+# Git
+_git_safedel() {
+    if [[ "${COMP_LINE}" =~ ^git\ safedel.*$ ]]; then
+        __gitcomp_nl "$(__git_heads)"
+    else
+        __git_main
+    fi
+}
+_git_top() {
+    if [[ "${COMP_LINE}" =~ ^git\ top.*$ ]]; then
+        __gitcomp_nl "$(__git_heads)"
+    else
+        __git_main
+    fi
+}
 
-alias gobrowser="godoc -http=:6060 -analysis=\"type,pointer\" -play=true -ex=true"
+function up() {
+    num=1
+    if [ $# -gt 0 ]; then
+        num=$1
+    fi
 
-# Functions
+    cd $(printf '../%.0s' $(seq 1 $num))
+}
 
 # (f)ind by (n)ame
 # usage: fn foo

@@ -18,6 +18,9 @@ exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
 exec --no-startup-id i3-msg 'exec workrave'
 
+# Start Virtualbox windows as floating
+for_window [title=".*Oracle VM VirtualBox$"] floating enable
+
 set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font

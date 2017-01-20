@@ -12,10 +12,10 @@
     untracked = 32 # Brighter blue
 
 [alias]
+    bv = branch -vv
     co = checkout
     amend = commit --amend
     aq = commit --amend --no-edit
-    aa = add -A .
     c = commit
     rv = review -R
     s = status -sb
