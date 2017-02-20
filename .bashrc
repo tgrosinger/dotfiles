@@ -21,6 +21,9 @@ alias grep="grep --color=auto"
 alias extract="tar xvf"
 alias df="df -h"
 
+# Golang
+export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin
+
 # VPN
 alias connect="sudo openvpn --config $HOME/home.ovpn"
 
