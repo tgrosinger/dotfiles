@@ -42,7 +42,7 @@ let g:ctrlp_user_command = {
     \ }
 
 " YouCompleteMe {{{1
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-compiler' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
 let g:ycm_complete_in_strings = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -114,9 +114,9 @@ au FileType go nmap <Leader>gl <Plug>(go-metalinter)
 let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'ineffassign']
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign']
-"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'dupl', 'ineffassign']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'varcheck']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign', 'gosimple', 'staticcheck']
+let g:go_metalinter_deadline = '10s'
 
 " Python Support {{{1
 Plug 'klen/python-mode'
