@@ -111,10 +111,16 @@ au FileType go nmap <Leader>gb <Plug>(go-doc)
 au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gi <Plug>(go-info)
 au FileType go nmap <Leader>gl <Plug>(go-metalinter)
+let g:go_highlight_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_auto_sameids = 1
 let g:go_auto_type_info = 0
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_command = "git metalinter"
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'varcheck']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign', 'gosimple', 'staticcheck']
+let g:go_metalinter_deadline = '5s'
+"let g:go_metalinter_command = "git metalinter"
 
 
 " Python Support {{{1
