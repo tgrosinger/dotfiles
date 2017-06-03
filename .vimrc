@@ -22,13 +22,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'simnalamburt/vim-mundo'
 nnoremap <F3> :MundoToggle<CR>
 
-" NERDTree {{{1
-Plug 'scrooloose/nerdtree'
-let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', 'node_modules']
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-let NERDTreeShowHidden=1
-map  <F2> :NERDTreeToggle<CR>
-map  <leader>e :NERDTreeFind<CR>
+" netrw
+let g:netrw_liststyle = 3
+let g:netrw_banner = 1
 
 " Ctrl-p {{{1
 Plug 'kien/ctrlp.vim'
