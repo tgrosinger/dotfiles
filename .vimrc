@@ -12,15 +12,22 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'reedes/vim-wordy'
-Plug 'scrooloose/syntastic'
 Plug 'idanarye/vim-merginal'
 Plug 'godlygeek/tabular'
 Plug 'airblade/vim-gitgutter'
 
+
+" Syntax Checking {{{1
+Plug 'vim-syntastic/syntastic'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_loc_list = 1
+
 " Undo {{{1
 Plug 'simnalamburt/vim-mundo'
 nnoremap <F3> :MundoToggle<CR>
+let g:mundo_width = 80
+let g:mundo_preview_height = 30
 
 " netrw
 let g:netrw_liststyle = 3
@@ -84,7 +91,9 @@ Plug 'Raimondi/delimitMate'
 let delimitMate_expand_cr = 1
 
 " Airline {{{1
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1 " Tab bar at top
 if !exists('g:airline_symbols')
@@ -180,14 +189,11 @@ set autoindent     " Indent on paste
 set smartindent    " Indent intelligently
 set nojoinspaces   " Collapse spaces after sentences
 
-" Don't exit visual mode when indenting
-vnoremap < <gv
-vnoremap > >gv
-
 " Search {{{1
 set ignorecase
 set smartcase
 set incsearch
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR>  " c-l redraws the screen and clears matches
 
 " Metadata {{{1
 set backup
@@ -214,12 +220,15 @@ set iskeyword-=.          " '.' is an end of word designator
 set iskeyword-=#          " '#' is an end of word designator
 set iskeyword-=-          " '-' is an end of word designator
 
+nnoremap & :&&<CR>        " & repeats the previous substitution, however by default
+xnoremap & :&&<CR>        " loses the flags, this fixes that.
+
 
 let g:clang_user_options='|| exit 0'
 
 set wildmenu                    " Show a menu rather than auto-completing
-let mapleader = ","
-let g:mapleader = ","
+" let mapleader = "\"           " Do not remap leader to , and instead use " default \
+" let g:mapleader = "\"
 
 " <Leader>e: Fast editing of the .vimrc
 nnoremap <Leader>e :e! ~/.dotfiles/.vimrc<cr>
