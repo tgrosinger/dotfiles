@@ -11,10 +11,16 @@ call plug#begin()
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
 Plug 'idanarye/vim-merginal'
 Plug 'godlygeek/tabular'
+
+" Git Support
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" Fugitive opens a lot of buffers for every git obj, close them when
+" they become hidden.
+autocmd BufReadPost fugitive://* set bufhidden=delete
 
 
 " Syntax Checking {{{1
