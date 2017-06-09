@@ -25,9 +25,7 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 " Syntax Checking {{{1
 Plug 'vim-syntastic/syntastic'
-let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_auto_loc_list = 1
 
 " Undo {{{1
 Plug 'simnalamburt/vim-mundo'
@@ -116,8 +114,6 @@ endif
 
 " Golang Support {{{1
 Plug 'fatih/vim-go'
-au FileType go nmap <Leader>gb <Plug>(go-doc)
-au FileType go nmap <Leader>gd <Plug>(go-def-vertical)
 au FileType go nmap <Leader>gi <Plug>(go-info)
 au FileType go nmap <Leader>gl <Plug>(go-metalinter)
 let g:go_highlight_types = 1
@@ -248,4 +244,5 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
 
