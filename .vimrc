@@ -39,6 +39,13 @@ Plug 'tpope/vim-fugitive'
 " they become hidden.
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
+Plug 'reedes/vim-pencil'
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+
 
 " Syntax Checking {{{1
 Plug 'vim-syntastic/syntastic'
