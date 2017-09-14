@@ -14,6 +14,23 @@ Plug 'tpope/vim-repeat'
 Plug 'idanarye/vim-merginal'
 Plug 'godlygeek/tabular'
 
+" Improved Incremental Search
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+let g:incsearch#auto_nohlsearch = 1 " Turn off search highlighting after moving
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+
+" Fuzzy Search
+Plug 'haya14busa/incsearch-fuzzy.vim'
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
+
 " Git Support
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -244,5 +261,4 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-
 
