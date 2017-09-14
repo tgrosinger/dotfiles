@@ -6,8 +6,11 @@ then
 fi
 alias c="clear"
 alias ..="cd ..;"
-alias la="ls -lha"
+alias la="ls -lhA"
 alias rmr="rm -r"
+
+# Disable the lockup of doom from ctrl+s
+#stty -ixon
 
 # History
 HISTSIZE=50000

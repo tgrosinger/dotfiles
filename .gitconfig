@@ -41,6 +41,7 @@
     tool = meld
     renames = copies
     compactionHeuristic = 1
+	submodule = log
 
 [branch]
     autosetuprebase = always
@@ -50,3 +51,5 @@
 
 [log]
 	date = local
+[status]
+	submoduleSummary = true
