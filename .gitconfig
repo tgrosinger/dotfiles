@@ -27,7 +27,7 @@
     dump = cat-file -p
     hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
     ri = "!f() { r=\"${1}\"; if [ \"${1}\" -eq \"${1}\" ]; then r=\"@~${1}\"; \
-                 fi >/dev/null 2>&1; git rebase -i \"${r}\"; }; f"
+                 fi >/dev/null 2>&1; git rebase --autosquash -i \"${r}\"; }; f"
 
 [push]
     default = simple
