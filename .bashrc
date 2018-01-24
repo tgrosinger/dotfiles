@@ -162,6 +162,20 @@ git_prompt () {
     echo " -- $git_color$git_branch${c_reset}"
 }
 
+kubectl_context() {
+    context=$(kubectl config current-context 2>/dev/null)
+    namespace=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+
+    prod_color=`tput setaf 1; tput bold`
+    dev_color=`tput setaf 4; tput bold`
+
+    if [[ "$context" = *"hopcloud.extrahop.com"* ]]; then
+        echo "${prod_color}${context}:${namespace}${c_reset}"
+    else
+        echo "${dev_color}${context}:${namespace}${c_reset}"
+    fi
+}
+
 # Prompt
-PS1="\n╔ \w -- \$(ls -1 | wc -l | sed 's: ::g') files\$(git_prompt)\n╚ \h\$ "
+PS1="\n╔ \w -- \$(ls -1 | wc -l | sed 's: ::g') files\$(git_prompt) -- \$(kubectl_context)\n╚ \h\$ "
 
