@@ -163,6 +163,10 @@ git_prompt () {
 }
 
 kubectl_context() {
+    if [ ! $(which kubectl) ]; then
+        return 0
+    fi
+
     context=$(kubectl config current-context 2>/dev/null)
     namespace=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
 
@@ -170,12 +174,12 @@ kubectl_context() {
     dev_color=`tput setaf 4; tput bold`
 
     if [[ "$context" = *"hopcloud.extrahop.com"* ]]; then
-        echo "${prod_color}${context}:${namespace}${c_reset}"
+        echo "-- ${prod_color}${context}:${namespace}${c_reset}"
     else
-        echo "${dev_color}${context}:${namespace}${c_reset}"
+        echo "-- ${dev_color}${context}:${namespace}${c_reset}"
     fi
 }
 
 # Prompt
-PS1="\n╔ \w -- \$(ls -1 | wc -l | sed 's: ::g') files\$(git_prompt) -- \$(kubectl_context)\n╚ \h\$ "
+PS1="\n╔ \w -- \$(ls -1 | wc -l | sed 's: ::g') files\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
