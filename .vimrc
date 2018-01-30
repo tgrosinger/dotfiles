@@ -46,6 +46,8 @@ augroup pencil
   autocmd FileType text         call pencil#init()
 augroup END
 
+Plug 'reedes/vim-wordy'
+
 
 " Syntax Checking {{{1
 Plug 'vim-syntastic/syntastic'

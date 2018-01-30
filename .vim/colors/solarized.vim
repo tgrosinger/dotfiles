@@ -360,7 +360,7 @@ endif
     let s:none            = "NONE"
     let s:t_none          = "NONE"
     let s:n               = "NONE"
-    let s:c               = ",undercurl"
+    let s:c               = ",underline"
     let s:r               = ",reverse"
     let s:s               = ",standout"
     let s:ou              = ""
