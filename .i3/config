@@ -14,9 +14,10 @@ exec_always --no-startup-id ~/.config/monitors1.sh
 workspace 1 output DP-1
 workspace 2 output DVI-I-1
 
-exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
 exec --no-startup-id i3-msg 'workspace 1; exec gnome-terminal'
-exec --no-startup-id i3-msg 'exec workrave'
+exec --no-startup-id i3-msg 'workspace 2; exec google-chrome'
+exec --no-startup-id i3-msg 'exec pavucontrol'
+exec --no-startup-id i3-msg 'exec indicator-sound-switcher'
 
 # Start Virtualbox windows as floating
 for_window [title=".*Oracle VM VirtualBox$"] floating enable
