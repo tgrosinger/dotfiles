@@ -48,6 +48,11 @@ augroup END
 
 Plug 'reedes/vim-wordy'
 
+" Python Autoformatting
+"Plug 'ambv/black'
+"let g:black_linelength = 80
+"let g:black_fast = 1
+"autocmd BufWritePost *.py execute ':Black'
 
 " Syntax Checking {{{1
 Plug 'vim-syntastic/syntastic'
