@@ -154,8 +154,7 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'varcheck']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign', 'gosimple', 'staticcheck']
-let g:go_metalinter_deadline = '5s'
-"let g:go_metalinter_command = "git metalinter"
+let g:go_metalinter_deadline = '20s'
 
 
 " Python Support {{{1
