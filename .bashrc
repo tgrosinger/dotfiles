@@ -185,5 +185,6 @@ kubectl_context() {
 }
 
 # Prompt
-PS1="\n╔ \w -- \$(ls -1 | wc -l | sed 's: ::g') files\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
+PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
+source ~/.ssh/agent-params.sh
