@@ -39,13 +39,6 @@ export TERM="xterm-256color"
 export EDITOR=$(which vim)
 
 
-function sshhome() {
-    sudo echo "logged in..."
-    sudo openvpn --config $HOME/home.ovpn --route-nopull &
-    sleep 4
-    sudo ip route add 192.168.0.0/24 dev tun0
-}
-
 # Adding applications to path
 if [[ -d ${HOME}/bin ]];
 then
