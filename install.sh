@@ -80,6 +80,7 @@ function performSetup() {
     echo "Linking bin files"
     linkFile "bin/git-safedel"
     linkFile "bin/diff-highlight"
+    linkFile "bin/exa-0.8.0"
 
     popd > /dev/null
 }
