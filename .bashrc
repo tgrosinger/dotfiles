@@ -2,6 +2,7 @@
 # Navigation
 #alias ls="ls --color=auto"
 alias ls="exa-0.8.0 --long --header --git --group"
+alias cat="bat-0.10.0 --theme=GitHub"
 alias tree="exa-0.8.0 --tree"
 alias c="clear"
 alias ..="cd ..;"

@@ -81,6 +81,7 @@ function performSetup() {
     linkFile "bin/git-safedel"
     linkFile "bin/diff-highlight"
     linkFile "bin/exa-0.8.0"
+    linkFile "bin/bat-0.10.0"
 
     popd > /dev/null
 }
