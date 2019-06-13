@@ -166,18 +166,20 @@ kubectl_context() {
 
     context=$(kubectl config current-context 2>/dev/null)
     namespace=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}")
+    cluster=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.cluster}")
 
     prod_color=`tput setaf 1; tput bold`
     dev_color=`tput setaf 4; tput bold`
 
     if [[ "$context" = *"hopcloud.extrahop.com"* ]]; then
-        echo "-- ${prod_color}${context}:${namespace}${c_reset}"
+        echo "-- ${prod_color}${cluster}:${namespace}${c_reset}"
     else
-        echo "-- ${dev_color}${context}:${namespace}${c_reset}"
+        echo "-- ${dev_color}${cluster}:${namespace}${c_reset}"
     fi
 }
 
 # Prompt
 PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
-source ~/.ssh/agent-params.sh
+#source ~/.ssh/agent-params.sh
+eval $(keychain --nogui --eval --quiet id_rsa)
