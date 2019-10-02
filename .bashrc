@@ -181,5 +181,4 @@ kubectl_context() {
 # Prompt
 PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
-#source ~/.ssh/agent-params.sh
 eval $(keychain --nogui --eval --quiet id_rsa)

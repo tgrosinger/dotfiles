@@ -83,6 +83,9 @@ function performSetup() {
     linkFile "bin/exa-0.8.0"
     linkFile "bin/bat-0.10.0"
 
+    echo "Installing tmux plugins"
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
     popd > /dev/null
 }
 
