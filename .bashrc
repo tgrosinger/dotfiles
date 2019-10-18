@@ -185,4 +185,7 @@ kubectl_context() {
 # Prompt
 PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
-eval $(keychain --nogui --eval --quiet id_rsa)
+for filename in ${HOME}/.ssh/*.pub; do
+    keyname="$(basename ${filename} .pub)"
+    eval $(keychain --nogui --eval --quiet ${keyname})
+done
