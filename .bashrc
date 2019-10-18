@@ -182,6 +182,11 @@ kubectl_context() {
     fi
 }
 
+to_md() {
+    # Convert the input file to markdown and copy to the clipboard
+    pandoc ${1} -t gfm | xclip -selection clipboard
+}
+
 # Prompt
 PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
