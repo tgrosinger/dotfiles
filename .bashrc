@@ -24,6 +24,10 @@ alias grep="grep --color=auto"
 alias extract="tar xvf"
 alias df="df -h"
 
+# Fix gpg signing
+# https://github.com/keybase/keybase-issues/issues/2798
+export GPG_TTY=$(tty)
+
 # Golang
 export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin
 
