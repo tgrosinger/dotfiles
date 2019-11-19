@@ -64,6 +64,10 @@ function performSetup() {
     linkFile ".vim"
     linkFile ".vimrc"
 
+    echo "Linking spacemacs..."
+    echo "(note: you must install spacemacs separately)"
+    linkFile ".spacemacs"
+
     echo "Linking Git..."
     linkFile ".gitconfig"
 
