@@ -316,28 +316,63 @@ you should place your code here."
   ;; Org General
   (setq org-blank-before-new-entry (quote ((heading)
                                            (plain-list-item . auto))))
+  (setq org-startup-indented t)
+  (setq org-startup-folded t)
+
+  ;; In org-mode, autosave in place frequently
+  (add-hook 'org-mode-hook 'my-org-mode-autosave-settings)
+  (defun my-org-mode-autosave-settings ()
+    ;; (auto-save-mode 1)   ; this is unnecessary as it is on by default
+    (set (make-local-variable 'auto-save-visited-file-name) t)
+    (setq auto-save-interval 20))
+
+  ;; Lists
+  (setq org-list-demote-modify-bullet (quote (("+" . "*")
+                                              ("*" . "-")
+                                              ("-" . "+")
+                                              ("1." . "-"))))
+
+  ;; Todos
+  (setq org-todo-keywords
+        '((sequence "TODO" "INPROGRESS" "|" "DONE" "WONTDO")))
+  (setq org-todo-keyword-faces
+        '(("INPROGRESS" . "yellow")
+          ("WONTDO" . "grey")))
 
   ;; Agenda
   (setq org-agenda-start-with-follow-mode t)
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
+  (setq org-deadline-warning-days 30)
 
   ;; Capture config
   (setq org-default-notes-file "~/org/refile.org")
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+olp+datetree "~/org/2019-daily.org")
-           "* TODO %?" :empty-lines 1)
+          ("t" "Todo" entry (file+headline "~/org/personal.org" "Inbox")
+           "* TODO %?")
+          ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
+           "* TODO %?")
           ("f" "File Context Todo" entry (file+olp+datetree "~/org/2019-daily.org")
            "* TODO %?\n  %i\n  %a")
           ("j" "Journal" entry (file+olp+datetree "~/org/2019-daily.org")
-           "* %^{Brief Description}\n  %?" :empty-lines 1)))
+           "* %^{Brief Description}\n  %?")))
 
   ;; Refile config
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
   (setq org-refile-allow-creating-parent-nodes 'confirm)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-use-outline-path t)
+
+  ;; Search Engines
+  (push '(jira
+          :name "Jira"
+          :url "https://jira.i.extrahop.com/secure/QuickSearch.jspa?searchString=%s")
+        search-engine-alist)
+  (push '(godev
+          :name "go.dev"
+          :url "https://pkg.go.dev/search?q=%s")
+        search-engine-alist)
 
   )
 
