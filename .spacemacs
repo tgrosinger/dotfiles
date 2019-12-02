@@ -417,14 +417,24 @@ you should place your code here."
 
   ;; Capture config
   (setq org-default-notes-file "~/org/refile.org")
+  ;; This could be made more powerful as an anonymous function
+  (defun org-find-heading-in-datetree()
+    (org-datetree-find-date-create (calendar-current-date))
+    (goto-char (point-at-eol))
+    (when (not (re-search-forward
+                (format org-complex-heading-regexp-format
+                        (regexp-quote "Notes")) nil t))
+      (insert "\n**** Notes\n"))
+    (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
           ("t" "Todo" entry (file+headline "~/org/2019-12-Dec.org" "Inbox")
            "* TODO %?")
           ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
            "* TODO %?")
-          ("j" "Journal" entry (file+olp+datetree "~/org/2019-daily.org")
-           "* %^{Brief Description}\n  %?")
+          ("j" "Journal" plain (file+function "~/org/2019-12-Dec.org"
+                                              org-find-heading-in-datetree)
+           "***** %^{Brief Description} %U\n%?")
           ("d" "Daily Planning" entry (file+olp+datetree "~/org/2019-12-Dec.org")
            (file "~/org/templates/daily-planning.org"))))
 
