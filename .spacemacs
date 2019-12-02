@@ -327,8 +327,11 @@ you should place your code here."
             "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome")
       ; optional something if not
   )
-  (spacemacs/set-leader-keys-for-major-mode 'org-mode "oc" 'browse-url-chrome)
-  (spacemacs/set-leader-keys-for-major-mode 'org-mode "of" 'browse-url-at-)
+  (defun org-open-at-point-with-chrome ()
+    (interactive)
+    (let ((browse-url-browser-function 'browse-url-chrome))
+      (org-open-at-point )))
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode "oc" 'org-open-at-point-with-chrome)
 
   ;; Org General
   (use-package org-sticky-header
