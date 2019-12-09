@@ -59,6 +59,7 @@ values."
    dotspacemacs-additional-packages '(org-recent-headings
                                       org-sticky-header
                                       org-super-agenda
+                                      org-web-tools
                                       org-ql)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -428,7 +429,7 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2019-12-Dec.org" "Inbox")
+          ("t" "Todo" entry (file+headline "~/org/2019-12-Dec.org" "Tasks")
            "* TODO %?")
           ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
            "* TODO %?")
