@@ -86,6 +86,7 @@ function performSetup() {
     linkFile "bin/diff-highlight"
     linkFile "bin/exa-0.8.0"
     linkFile "bin/bat-0.10.0"
+    linkFile "bin/diff-so-fancy"
 
     echo "Installing tmux plugins"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

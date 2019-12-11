@@ -1,6 +1,6 @@
 [user]
 	name = Tony Grosinger
-	email = tony@grosinger.net
+	email = tgrosinger@extrahop.com
 [color]
     ui = auto
 
@@ -17,17 +17,16 @@
     amend = commit --amend
     aq = commit --amend --no-edit
     c = commit
-    rv = review -R
     s = status -sb
-    d = diff --color-words --minimal
     b = branch
     pp = log --color --graph --pretty=format:'%Cred%h%Creset %Cgreen(%cr) %Creset\t%s %C(bold blue)<%an> %C(yellow)%d%Creset' --abbrev-commit
-    cr = difftool --dir-diff
     type = cat-file -t
     dump = cat-file -p
-    hist = log --pretty=format:\"%C(yellow)%h %C(blue)%ad %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
+    hist = log --pretty=format:\"%C(yellow)%h %C(blue)%cd %C(red)%d %C(reset)%s %C(green)[%an]\" --decorate --graph --date=short --all
     ri = "!f() { r=\"${1}\"; if [ \"${1}\" -eq \"${1}\" ]; then r=\"@~${1}\"; \
                  fi >/dev/null 2>&1; git rebase --autosquash -i \"${r}\"; }; f"
+    patch = !git --no-pager diff --no-color
+    diff = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
 
 [push]
     default = simple
@@ -35,13 +34,13 @@
 [core]
     editor = vim
     excludesfile = /home/tgrosinger/.gitignore_global
-    pager = bash -lc 'diff-highlight | less -F -R -X -x1,5' -
+    pager = diff-so-fancy | less --tabs=4 -RFX
 
 [diff]
     tool = meld
     renames = copies
     compactionHeuristic = 1
-	submodule = log
+    submodule = log
 
 [branch]
     autosetuprebase = always
@@ -50,6 +49,7 @@
     rebase = true
 
 [log]
-	date = local
+    date = local
+
 [status]
-	submoduleSummary = true
+    submoduleSummary = true

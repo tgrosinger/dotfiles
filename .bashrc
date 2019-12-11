@@ -1,4 +1,3 @@
-
 # Navigation
 #alias ls="ls --color=auto"
 alias ls="exa-0.8.0 --long --header --git --group"
@@ -194,3 +193,7 @@ for filename in ${HOME}/.ssh/*.pub; do
     keyname="$(basename ${filename} .pub)"
     eval $(keychain --nogui --eval --quiet ${keyname})
 done
+
+# Starship Prompt
+# NOTE: This negates the above lines for PS1, kubectl_context, and git_prompt
+eval "$(starship init bash)"
