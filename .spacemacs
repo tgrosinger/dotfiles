@@ -373,7 +373,7 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "st" 'archive-task-today)
 
   ;; Agenda
-  (setq org-agenda-start-with-follow-mode t)
+  ;;(setq org-agenda-start-with-follow-mode t)
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
   (setq org-deadline-warning-days 30)
