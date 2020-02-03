@@ -64,6 +64,10 @@ function performSetup() {
     linkFile ".vim"
     linkFile ".vimrc"
 
+    echo "Linking Broot..."
+    mkdir -p .config/broot
+    ln -fns broot.conf.toml .config/broot/conf.toml
+
     echo "Linking spacemacs..."
     echo "(note: you must install spacemacs separately)"
     linkFile ".spacemacs"
@@ -87,6 +91,7 @@ function performSetup() {
     linkFile "bin/exa-0.8.0"
     linkFile "bin/bat-0.10.0"
     linkFile "bin/diff-so-fancy"
+    linkFile "bin/broot"
 
     echo "Installing tmux plugins"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
