@@ -47,7 +47,6 @@ values."
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     search-engine
      (spell-checking :variables spell-checking-enable-auto-dictionary t)
      ;; syntax-checking
      ;; version-control
@@ -56,9 +55,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(org-recent-headings
-                                      org-sticky-header
-                                      org-super-agenda
+   dotspacemacs-additional-packages '(org-super-agenda
                                       org-web-tools
                                       org-ql)
    ;; A list of packages that cannot be updated.
@@ -335,13 +332,6 @@ you should place your code here."
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "oc" 'org-open-at-point-with-chrome)
 
   ;; Org General
-  (use-package org-sticky-header
-    :ensure t
-    :hook (org-mode . org-sticky-header-mode))
-  (use-package org-recent-headings
-    :ensure t
-    :config (org-recent-headings-mode)
-    :init (spacemacs/set-leader-keys "jh" 'org-recent-headings-helm))
   (use-package org-ql
     :ensure t)
   (setq org-blank-before-new-entry (quote ((heading)
@@ -349,6 +339,8 @@ you should place your code here."
   (setq org-startup-indented t)
   (setq org-startup-folded t)
   (setq org-link-file-path-type "relative")
+  ;; Prevent editing in hidden portions of file
+  (setq org-catch-invisible-edits 'show-and-error)
 
   ;; Lists
   (setq org-list-demote-modify-bullet (quote (("+" . "*")
@@ -438,14 +430,14 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2020-01-Jan.org" "Tasks")
+          ("t" "Todo" entry (file+headline "~/org/2020-02-Feb.org" "Tasks")
            "* TODO %?")
           ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
            "* TODO %?")
-          ("j" "Journal" plain (file+function "~/org/2020-01-Jan.org"
+          ("j" "Journal" plain (file+function "~/org/2020-02-Feb.org"
                                               org-find-heading-in-datetree)
            "***** %^{Brief Description} %U\n%?")
-          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-01-Jan.org")
+          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-02-Feb.org")
            (file "~/org/templates/daily-planning.org"))))
 
   ;; Refile config
@@ -453,17 +445,6 @@ you should place your code here."
   (setq org-refile-allow-creating-parent-nodes 'confirm)
   (setq org-outline-path-complete-in-steps nil)
   (setq org-refile-use-outline-path t)
-
-  ;; Search Engines
-  (push '(jira
-          :name "Jira"
-          :url "https://jira.i.extrahop.com/secure/QuickSearch.jspa?searchString=%s")
-        search-engine-alist)
-  (push '(godev
-          :name "go.dev"
-          :url "https://pkg.go.dev/search?q=%s")
-        search-engine-alist)
-
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -475,7 +456,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -495,7 +476,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/org" "~/org/notes")))
  '(package-selected-packages
    (quote
-    (org-sticky-header ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
+    (org-recent-headings org-sticky-header ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
