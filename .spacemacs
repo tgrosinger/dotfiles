@@ -430,14 +430,14 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2020-02-Feb.org" "Tasks")
+          ("t" "Todo" entry (file+headline "~/org/2020-03-Mar.org" "Tasks")
            "* TODO %?")
           ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
            "* TODO %?")
-          ("j" "Journal" plain (file+function "~/org/2020-02-Feb.org"
+          ("j" "Journal" plain (file+function "~/org/2020-03-Mar.org"
                                               org-find-heading-in-datetree)
            "***** %^{Brief Description} %U\n%?")
-          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-02-Feb.org")
+          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-03-Mar.org")
            (file "~/org/templates/daily-planning.org"))))
 
   ;; Refile config
