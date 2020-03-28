@@ -85,6 +85,9 @@ function performSetup() {
     linkFile ".i3"
     linkFile ".i3status.conf"
 
+    echo "Linking navi cheatsheets..."
+    ln -fns ${REPO_DIR}/navi  .local/share/navi
+
     echo "Linking bin files"
     linkFile "bin/git-safedel"
     linkFile "bin/diff-highlight"
@@ -92,6 +95,7 @@ function performSetup() {
     linkFile "bin/bat-0.10.0"
     linkFile "bin/diff-so-fancy"
     linkFile "bin/broot"
+    linkFile "bin/navi"
 
     echo "Installing tmux plugins"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
