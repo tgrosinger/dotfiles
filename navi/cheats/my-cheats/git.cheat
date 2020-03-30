@@ -1,0 +1,6 @@
+% git
+
+# Checkout a file from another branch
+git checkout <branch> -- <file>
+
+$ branch: git branch | awk '{print $NF}'

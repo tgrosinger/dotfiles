@@ -197,3 +197,6 @@ done
 # Starship Prompt
 # NOTE: This negates the above lines for PS1, kubectl_context, and git_prompt
 eval "$(starship init bash)"
+
+source /home/tgrosinger/.config/broot/launcher/bash/br
+source <(navi widget bash)
