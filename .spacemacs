@@ -430,14 +430,14 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2020-03-Mar.org" "Tasks")
+          ("t" "Todo" entry (file+headline "~/org/2020-04-Apr.org" "Tasks")
            "* TODO %?")
           ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
            "* TODO %?")
-          ("j" "Journal" plain (file+function "~/org/2020-03-Mar.org"
+          ("j" "Journal" plain (file+function "~/org/2020-04-Apr.org"
                                               org-find-heading-in-datetree)
            "***** %^{Brief Description} %U\n%?")
-          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-03-Mar.org")
+          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-04-Apr.org")
            (file "~/org/templates/daily-planning.org"))))
 
   ;; Refile config
@@ -474,6 +474,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(org-agenda-files (quote ("~/org" "~/org/notes")))
+ '(org-modules
+   (quote
+    (org-bbdb org-bibtex org-docview org-eww org-gnus org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
  '(package-selected-packages
    (quote
     (org-recent-headings org-sticky-header ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
