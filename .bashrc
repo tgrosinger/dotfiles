@@ -20,8 +20,6 @@ shopt -s histappend
 # Applications
 alias tmux="tmux -2"
 alias grep="grep --color=auto"
-alias extract="tar xvf"
-alias df="df -h"
 
 # Fix gpg signing
 # https://github.com/keybase/keybase-issues/issues/2798
@@ -29,9 +27,6 @@ export GPG_TTY=$(tty)
 
 # Golang
 export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin
-
-# VPN
-alias connect="sudo openvpn --config $HOME/home.ovpn"
 
 # enable bash completion in interactive shells
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -41,16 +36,11 @@ fi
 export TERM="xterm-256color"
 export EDITOR=$(which vim)
 
-
 # Adding applications to path
 if [[ -d ${HOME}/bin ]];
 then
     export PATH=$PATH:${HOME}/bin
 fi
-
-# Computer information & control
-alias df="df -h"
-alias suspend="sudo pm-suspend"
 
 # Add a local un-tracked bash-rc if present
 if [[ -f ${HOME}/.bashrc_local ]];
@@ -97,39 +87,6 @@ function fn() {
         echo "Where name is the file name to search for"
 	fi
 }
-
-# (f)ind by (b)ody
-# usage: fb foo
-# to find all files containing 'foo' in the body.
-#
-# usage: fb foo txt
-# to find all files ending in '.txt' containing 'foo' in the body.
-function fb() {
-    if [ $# -eq 2 ]; then
-        grep -r --include="*.$2" $1
-    elif [ $# -eq 1 ]; then
-        grep -r "$1"
-    else
-        echo "(f)ind by (b)ody"
-        echo "usage: fb [query] [extension]"
-        echo "Where query is the string to search for and extension is optional restriction on what files to search"
-    fi
-}
-
-# wificonnect
-# usage: wificonnect <ssid> <password>
-# Connects the computer to the provided network
-# Assumes the network interface is wlan0
-function wificonnect() {
-    if [ $# -ne 2]; then
-        echo "wificonnect"
-        echo "usage: wificonnect <ssid> <password>"
-    else
-        nmcli d wifi connect $1 password $2 iface wlan0
-    fi
-}
-
-# Prompt Related Helpers
 
 # Add color shortcuts
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
