@@ -44,6 +44,7 @@ values."
      finance
      ;; markdown
      org
+     elfeed
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -430,14 +431,12 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2020-04-Apr.org" "Tasks")
+          ("t" "Todo" entry (file+headline "~/org/2020-journal.org" "Tasks")
            "* TODO %?")
-          ("w" "Work Todo" entry (file+headline "~/org/work.org" "Tasks")
-           "* TODO %?")
-          ("j" "Journal" plain (file+function "~/org/2020-04-Apr.org"
+          ("j" "Journal" plain (file+function "~/org/2020-journal.org"
                                               org-find-heading-in-datetree)
            "***** %^{Brief Description} %U\n%?")
-          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-04-Apr.org")
+          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-journal.org")
            (file "~/org/templates/daily-planning.org"))))
 
   ;; Refile config
@@ -473,6 +472,41 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(elfeed-feeds
+   (quote
+    (("https://theartistasfamily.blogspot.com/" homesteading)
+     ("https://www.cloudmountainfarmcenter.org/feed/" farming)
+     ("http://feeds.feedburner.com/greensideupveg" farming)
+     ("https://dave.cheney.net/feed" dev)
+     ("https://fastmail.blog/rss/" companies)
+     ("https://www.goinggo.net/index.xml" dev)
+     ("https://github.com/kubernetes/kops/releases.atom" dev-releases)
+     ("https://letsencrypt.org/feed.xml" companies)
+     ("https://www.pine64.org/feed/" companies)
+     ("https://karl-voit.at/feeds/lazyblorg-all.atom_1.0.links-only.xml" dev)
+     ("https://github.com/dani-garcia/bitwarden_rs/releases.atom" dev-releases)
+     ("https://feedity.com/swtch-com/WlVVU1tU.rss" dev)
+     ("http://tonsky.me/blog/atom.xml" dev)
+     ("http://www.byhandandeye.com/feed/" woodworking)
+     ("https://blog.lostartpress.com/feed/" woodworking)
+     ("http://www.mortiseandtenonmag.com/blogs/blog.atom" woodworking)
+     ("http://www.commitstrip.com/en/feed/?" comics)
+     ("http://www.exocomics.com/feed" comics)
+     ("http://feeds.feedburner.com/InvisibleBread?format=xml" comics)
+     ("http://www.loadingartist.com/feed/" comics)
+     ("http://www.monkeyuser.com/feed.xml" comics)
+     ("http://feeds.penny-arcade.com/pa-mainsite" comics)
+     ("http://feeds.feedburner.com/PoorlyDrawnLines?format=xml" comics)
+     ("http://www.smbc-comics.com/rss.php" comics)
+     ("http://xkcd.com/atom.xml" comics)
+     ("http://www.islandssounder.com/feed/" news)
+     ("http://neseattletoollibrary.org/feed/" community)
+     ("https://orcasissues.com/feed/" news)
+     ("https://orcastoday.com/category/happenings/feed/" news)
+     ("http://feeds.feedburner.com/MrMoneyMustache?format=xml" finance)
+     ("http://waitbutwhy.com/feed" entertainment)
+     ("https://zeroinputagriculture.wordpress.com/feed" farming))))
+
  '(org-agenda-files (quote ("~/org" "~/org/notes")))
  '(org-modules
    (quote
