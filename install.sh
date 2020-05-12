@@ -76,13 +76,9 @@ function performSetup() {
     linkFile ".bashrc"
     ln -fns ${REPO_DIR}/.bashrc .zshrc
 
-    if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
-        echo "Linking vim..."
-        linkFile ".vim"
-        linkFile ".vimrc"
-    else
-        echo "Skipping vim, non-linux OS"
-    fi
+    echo "Linking vim..."
+    linkFile ".vim"
+    linkFile ".vimrc"
 
     echo "Linking spacemacs..."
     echo "(note: you must install spacemacs separately)"

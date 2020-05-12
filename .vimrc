@@ -1,8 +1,7 @@
 " vim: foldmethod=marker
 "
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin()
@@ -31,23 +30,6 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
-" Git Support
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-
-" Fugitive opens a lot of buffers for every git obj, close them when
-" they become hidden.
-autocmd BufReadPost fugitive://* set bufhidden=delete
-
-Plug 'reedes/vim-pencil'
-augroup pencil
-  autocmd!
-  autocmd FileType markdown,mkd call pencil#init()
-  autocmd FileType text         call pencil#init()
-augroup END
-
-Plug 'reedes/vim-wordy'
-
 " Python Autoformatting
 "Plug 'ambv/black'
 "let g:black_linelength = 80
@@ -58,12 +40,6 @@ Plug 'reedes/vim-wordy'
 Plug 'vim-syntastic/syntastic'
 let g:syntastic_check_on_wq = 0
 
-" Undo {{{1
-Plug 'simnalamburt/vim-mundo'
-nnoremap <F3> :MundoToggle<CR>
-let g:mundo_width = 80
-let g:mundo_preview_height = 30
-
 " netrw
 let g:netrw_liststyle = 3
 let g:netrw_banner = 1
@@ -72,18 +48,7 @@ let g:netrw_banner = 1
 Plug 'kien/ctrlp.vim'
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files . -co --exclude-standard'],
-        \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
-
-" YouCompleteMe {{{1
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --gocode-completer' }
-let g:ycm_complete_in_strings = 0
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
+let g:ctrlp_user_command = { 'types': { 1: ['.git', 'cd %s && git ls-files . -co --exclude-standard'], }, 'fallback': 'find %s -type f' }
 
 " JSON Support {{{1
 Plug 'elzr/vim-json'
@@ -96,18 +61,6 @@ nnoremap <silent> <C-Down> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-Up> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-Right> :TmuxNavigateRight<cr>
 
-" Tab Completion {{{1
-Plug 'sirver/ultisnips'
-
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>""
-
 " Color Scheme {{{1
 Plug 'altercation/vim-colors-solarized'
 let g:solarized_termcolors=256
@@ -117,7 +70,6 @@ let g:solarized_visibility="normal"
 set background=light
 colorscheme solarized
 highlight ColorColumn ctermbg=0 guibg=#eee8d5
-
 
 " DelimitMate {{{1
 Plug 'Raimondi/delimitMate'
@@ -137,7 +89,6 @@ if has('statusline')
     set laststatus=2
     set statusline=%<%f\                     " Filename
     set statusline+=%w%h%m%r                 " Options
-    set statusline+=%{fugitive#statusline()} " Git Hotness
     set statusline+=\ [%{&ff}/%Y]            " Filetype
     set statusline+=\ [%{getcwd()}]          " Current dir
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
@@ -252,7 +203,6 @@ set iskeyword-=-          " '-' is an end of word designator
 
 nnoremap & :&&<CR>        " & repeats the previous substitution, however by default
 xnoremap & :&&<CR>        " loses the flags, this fixes that.
-
 
 let g:clang_user_options='|| exit 0'
 
