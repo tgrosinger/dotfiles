@@ -137,7 +137,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Fira Code"
+   dotspacemacs-default-font '("JetBrains Mono"
                                :size 13
                                :weight normal
                                :width normal
@@ -360,7 +360,7 @@ you should place your code here."
   (defun archive-task-today ()
     (interactive)
     (let* ((date (format-time-string "%Y-%m-%b"))
-           (org-archive-location (concat "~/org/" date ".org::datetree/** Tasks for today"))
+           (org-archive-location "~/org/2020-journal.org::datetree/** Tasks for today")
            (org-archive-save-context-info nil))
       (org-archive-subtree)))
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "st" 'archive-task-today)
