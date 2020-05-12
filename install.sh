@@ -20,6 +20,16 @@ GIT_REPO_BASE="https://github.com/tgrosinger/dotfiles"
 GIT_REPO="${GIT_REPO_BASE}.git"
 REPO_TAR="${GIT_REPO_BASE}/archive/master.tar.gz"
 
+
+if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+	BIN_DIR="bin/linux"
+elif [[ "${OSTYPE}" == "darwin"* ]]; then
+	BIN_DIR="bin/osx"
+else
+	echo "Unknown OS type"
+	exit 1
+fi
+
 ################################################################################
 # Define functions
 ################################################################################
@@ -27,6 +37,11 @@ REPO_TAR="${GIT_REPO_BASE}/archive/master.tar.gz"
 # Remove a file if it exists then create a symlink to the one contained in ${REPO_DIR}
 function linkFile() {
     ln -fns ${REPO_DIR}/$1 $1;
+}
+
+# Remove a file if it exists then create a symlink from the file in $HOME/bin to the one contained in ${REPO_DIR}
+function linkBin() {
+    ln -fns ${REPO_DIR}/$1 $HOME/bin/$2;
 }
 
 # Create a directory named by first parameter. Delete directory first if it already exists.
@@ -59,14 +74,15 @@ function performSetup() {
 
     echo "Linking shell configs..."
     linkFile ".bashrc"
+    ln -fns ${REPO_DIR}/.bashrc .zshrc
 
-    echo "Linking vim..."
-    linkFile ".vim"
-    linkFile ".vimrc"
-
-    echo "Linking Broot..."
-    mkdir -p .config/broot
-    ln -fns broot.conf.toml .config/broot/conf.toml
+    if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+        echo "Linking vim..."
+        linkFile ".vim"
+        linkFile ".vimrc"
+    else
+        echo "Skipping vim, non-linux OS"
+    fi
 
     echo "Linking spacemacs..."
     echo "(note: you must install spacemacs separately)"
@@ -89,16 +105,24 @@ function performSetup() {
     ln -fns ${REPO_DIR}/navi  .local/share/navi
 
     echo "Linking bin files"
-    linkFile "bin/git-safedel"
-    linkFile "bin/diff-highlight"
-    linkFile "bin/exa-0.8.0"
-    linkFile "bin/bat-0.10.0"
-    linkFile "bin/diff-so-fancy"
-    linkFile "bin/broot"
-    linkFile "bin/navi"
+    linkBin "${BIN_DIR}/exa-0.9.0" "exa"
+    linkBin "${BIN_DIR}/bat-0.13.0" "bat"
+    linkBin "${BIN_DIR}/navi-2.5.1" "navi"
+    linkBin "${BIN_DIR}/jq-1.6" "jq"
+
+    echo "Linking scripts"
+    linkBin "scripts/diff-highlight" "diff-highlight"
+    linkBin "scripts/diff-so-fancy" "diff-so-fancy"
+    linkBin "scripts/git-metalint" "git-metalint"
+    linkBin "scripts/git-safedel" "git-safedel"
+    linkBin "scripts/git-top" "git-top"
 
     echo "Installing tmux plugins"
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+    if [[ "${OSTYPE}" == "darwin"* ]]; then
+        brew install rsync rga pandoc poppler tesseract tmux ledger 
+    fi
 
     popd > /dev/null
 }

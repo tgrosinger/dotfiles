@@ -1,9 +1,8 @@
 # Navigation
 #alias ls="ls --color=auto"
-alias ls="exa-0.8.0 --long --header --git --group"
-alias cat="bat-0.10.0 --theme=GitHub"
-alias tree="exa-0.8.0 --tree"
-alias c="clear"
+alias ls="exa --long --header --git --group"
+alias cat="bat --theme=GitHub"
+alias tree="exa --tree"
 alias ..="cd ..;"
 alias la="ls -lhA"
 alias rmr="rm -r"
@@ -15,7 +14,18 @@ alias rmr="rm -r"
 HISTSIZE=50000
 HISTFILESIZE=50000
 HISTCONTROL=ignoredups:ignorespace
-shopt -s histappend
+
+if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    # History
+    shopt -s histappend
+
+    for filename in ${HOME}/.ssh/*.pub; do
+        keyname="$(basename ${filename} .pub)"
+        eval $(keychain --nogui --eval --quiet ${keyname})
+    done
+elif [[ "${OSTYPE}" == "darwin"* ]]; then
+
+fi
 
 # Applications
 alias tmux="tmux -2"
@@ -27,11 +37,6 @@ export GPG_TTY=$(tty)
 
 # Golang
 export PATH=$PATH:/usr/local/go/bin:${HOME}/go/bin
-
-# enable bash completion in interactive shells
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
 
 export TERM="xterm-256color"
 export EDITOR=$(which vim)
@@ -86,6 +91,12 @@ function fn() {
         echo "usage: fn [name]"
         echo "Where name is the file name to search for"
 	fi
+}
+
+# (f)ind (i)n (f)ile
+# usage: fif "text to search"
+function fif() {
+	rga $1 2>/dev/null
 }
 
 # Add color shortcuts
@@ -143,17 +154,16 @@ to_md() {
     pandoc ${1} -t gfm | xclip -selection clipboard
 }
 
-# Prompt
-PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
+if [ "$BASH" != "" ]; then
+    # Prompt
+    PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
 
-for filename in ${HOME}/.ssh/*.pub; do
-    keyname="$(basename ${filename} .pub)"
-    eval $(keychain --nogui --eval --quiet ${keyname})
-done
+    # enable bash completion in interactive shells
+    if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+        . /etc/bash_completion
+    fi
+elif [ "$ZSH_NAME" != "" ]; then
 
-# Starship Prompt
-# NOTE: This negates the above lines for PS1, kubectl_context, and git_prompt
-eval "$(starship init bash)"
+fi
 
-source /home/tgrosinger/.config/broot/launcher/bash/br
 source <(navi widget bash)
