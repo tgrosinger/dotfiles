@@ -23,8 +23,7 @@ if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
         keyname="$(basename ${filename} .pub)"
         eval $(keychain --nogui --eval --quiet ${keyname})
     done
-elif [[ "${OSTYPE}" == "darwin"* ]]; then
-
+#elif [[ "${OSTYPE}" == "darwin"* ]]; then
 fi
 
 # Applications
@@ -162,8 +161,7 @@ if [ "$BASH" != "" ]; then
     if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
         . /etc/bash_completion
     fi
-elif [ "$ZSH_NAME" != "" ]; then
-
+#elif [ "$ZSH_NAME" != "" ]; then
 fi
 
 source <(navi widget bash)
