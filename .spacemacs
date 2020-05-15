@@ -360,7 +360,7 @@ you should place your code here."
   (defun archive-task-today ()
     (interactive)
     (let* ((date (format-time-string "%Y-%m-%b"))
-           (org-archive-location "~/org/2020-journal.org::datetree/** Tasks for today")
+           (org-archive-location "~/Sync/org/2020-journal.org::datetree/** Tasks for today")
            (org-archive-save-context-info nil))
       (org-archive-subtree)))
   (spacemacs/set-leader-keys-for-major-mode 'org-mode "st" 'archive-task-today)
@@ -419,7 +419,7 @@ you should place your code here."
                                  :order 90)))))))))
 
   ;; Capture config
-  (setq org-default-notes-file "~/org/refile.org")
+  (setq org-default-notes-file "~/org/Sync/refile.org")
   ;; This could be made more powerful as an anonymous function
   (defun org-find-heading-in-datetree()
     (org-datetree-find-date-create (calendar-current-date))
@@ -431,13 +431,13 @@ you should place your code here."
     (goto-char (point-at-eol)))
   (setq org-capture-templates
         '(
-          ("t" "Todo" entry (file+headline "~/org/2020-journal.org" "Tasks")
+          ("t" "Todo" entry (file+headline "~/Sync/org/2020-journal.org" "Tasks")
            "* TODO %?")
-          ("j" "Journal" plain (file+function "~/org/2020-journal.org"
+          ("j" "Journal" plain (file+function "~/Sync/org/2020-journal.org"
                                               org-find-heading-in-datetree)
            "***** %^{Brief Description} %U\n%?")
-          ("d" "Daily Planning" entry (file+olp+datetree "~/org/2020-journal.org")
-           (file "~/org/templates/daily-planning.org"))))
+          ("d" "Daily Planning" entry (file+olp+datetree "~/Sync/org/2020-journal.org")
+           (file "~/org/Sync/templates/daily-planning.org"))))
 
   ;; Refile config
   (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
@@ -506,8 +506,7 @@ This function is called at the very end of Spacemacs initialization."
      ("http://feeds.feedburner.com/MrMoneyMustache?format=xml" finance)
      ("http://waitbutwhy.com/feed" entertainment)
      ("https://zeroinputagriculture.wordpress.com/feed" farming))))
-
- '(org-agenda-files (quote ("~/org" "~/org/notes")))
+ '(org-agenda-files (quote ("~/Sync/org" "~/Sync/org/notes")))
  '(org-modules
    (quote
     (org-bbdb org-bibtex org-docview org-eww org-gnus org-info org-irc org-mhe org-protocol org-rmail org-w3m)))
