@@ -11,9 +11,10 @@
 # Summary
 # --------------------------------------------------------
 #
-# Performs a safe deletion of a branch by pulling master from origin, then
-# rebasing the specified or current branch on master. Once complete, a branch
-# deletion is attempted, however aborted if the branch is not fully merged.
+# Performs a safe deletion of a branch by pulling the default branch from
+# origin, then rebasing the specified or current branch on the default branch.
+# Once complete, a branch deletion is attempted, however aborted if the branch
+# is not fully merged.
 #
 # Author: Tony Grosinger
 #
@@ -21,7 +22,7 @@
 # Dependencies
 # --------------------------------------------------------
 #
-# * Git Top (Used to pull from master and rebase)
+# * Git Top (Used to pull from the default branch and rebase)
 #
 # --------------------------------------------------------
 # Installation
@@ -37,6 +38,10 @@
 #        fi
 #    }
 #
+# Ensure the following is in your .gitconfig alias section:
+#
+#    default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d/"
+#
 
 VERSION="v0.0.2"
 
@@ -44,6 +49,8 @@ GREEN="\e[32m"
 BLUE="\e[34m"
 RED="\e[91m"
 CLEAR="\e[0m"
+
+DEFAULT_BRANCH=$(git default-branch)
 
 version() {
     echo "git safedel ${VERSION}"
@@ -55,7 +62,7 @@ usage() {
     echo ""
     echo "If branch name is omitted, current branch will be deleted"
     echo "Only safe deletes are attempted. If delete fails, then command"
-    echo "only acts as a rebase against master."
+    echo "only acts as a rebase against the default branch."
 }
 
 print_cmd() {
@@ -119,7 +126,7 @@ require_clean_work_tree() {
 
 delete_branch() {
     local startbranch=${1}
-    exec_cmd "git checkout -q master"
+    exec_cmd "git checkout -q ${DEFAULT_BRANCH}"
     exec_cmd "git branch -d ${startbranch}"
 
     if [ $? != 0 ]; then
@@ -156,8 +163,8 @@ main() {
 
     print_status "Attempting to delete branch: ${startbranch}"
 
-    if [ ${startbranch} = "master" ]; then
-        echo "Cannot delete branch \"master\""
+    if [ ${startbranch} = "${DEFAULT_BRANCH}" ]; then
+        echo "Cannot delete branch \"${DEFAULT_BRANCH}\""
         echo "Please switch branch or provide a branch name as an argument."
         exit 1
     fi

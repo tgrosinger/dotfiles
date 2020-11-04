@@ -12,7 +12,6 @@
     untracked = 32 # Brighter blue
 
 [alias]
-    bv = branch -vv
     co = checkout
     amend = commit --amend
     aq = commit --amend --no-edit
@@ -27,6 +26,14 @@
                  fi >/dev/null 2>&1; git rebase --autosquash -i \"${r}\"; }; f"
     patch = !git --no-pager diff --no-color
     diff = diff-so-fancy | less --tabs=4 -RFXS --pattern '^(Date|added|deleted|modified): '
+    review = "!f(){ BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\"; git push -u origin \"$BRANCH\":user/$USER/\"$BRANCH\" --force; }; f"
+
+    # Branch-agnostic aliases
+    # https://aj.codes/post/branch-agnostic-git-aliases/
+    default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d/"
+    pom = push origin $(git default-branch)
+    merged-branches = "!git branch --merged $(git default-branch)"
+    sync = "!git fetch -p && git rebase origin/$(git default-branch)"
 
 [push]
     default = simple
@@ -35,6 +42,7 @@
     editor = vim
     excludesfile = /home/tgrosinger/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
+	attributesfile = /home/tgrosinger/.gitattributes
 
 [diff]
     tool = meld

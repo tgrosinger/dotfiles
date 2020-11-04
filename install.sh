@@ -86,6 +86,7 @@ function performSetup() {
 
     echo "Linking Git..."
     linkFile ".gitconfig"
+    linkFile ".gitattributes"
 
     echo "Linking tmux..."
     linkFile ".tmux.conf"

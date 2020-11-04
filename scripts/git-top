@@ -11,8 +11,8 @@
 # Summary
 # --------------------------------------------------------
 #
-# Performs a pull from origin onto master before rebasing the current branch on
-# master.
+# Performs a pull from origin onto the default branch before rebasing the
+# current branch on to the default branch.
 #
 # Author: Tony Grosinger
 #
@@ -30,6 +30,10 @@
 #        fi
 #    }
 #
+# Ensure the following is in your .gitconfig alias section:
+#
+#    default-branch = "!git symbolic-ref refs/remotes/origin/HEAD | cut -f4 -d/"
+#
 
 VERSION="v0.0.2"
 
@@ -37,6 +41,8 @@ GREEN="\e[32m"
 BLUE="\e[34m"
 RED="\e[91m"
 CLEAR="\e[0m"
+
+DEFAULT_BRANCH=$(git default-branch)
 
 version() {
     echo "git top ${VERSION}"
@@ -113,21 +119,21 @@ checkout() {
 }
 
 pull_remote() {
-    checkout "master"
+    checkout "${DEFAULT_BRANCH}"
     exec_cmd "git pull -r -q"
 
     if [ $? != 0 ]; then
-        echo >&2 "Could not pull on master, please check that upstream is set and try again."
+        echo >&2 "Could not pull on ${DEFAULT_BRANCH}, please check that upstream is set and try again."
         exit 1
     fi
 }
 
 rebase() {
     local startbranch=${1}
-    exec_cmd "git rebase -q master ${startbranch}"
+    exec_cmd "git rebase -q ${DEFAULT_BRANCH} ${startbranch}"
 
     if [ $? != 0 ]; then
-        echo >&2 "Could not rebase ${startbranch} on master, rolling back changes."
+        echo >&2 "Could not rebase ${startbranch} on ${DEFAULT_BRANCH}, rolling back changes."
         echo >&2 "Please manually resolve conflicts."
 
         git rebase --abort
@@ -168,8 +174,10 @@ main() {
 
     require_clean_work_tree
 
-    if [ ${startbranch} = "master" ]; then
-        print_status "Already on master, only performing git pull"
+    git fetch -p
+
+    if [ ${startbranch} = "${DEFAULT_BRANCH}" ]; then
+        print_status "Already on ${DEFAULT_BRANCH}, only performing git pull"
         pull_remote
     else
         pull_remote
