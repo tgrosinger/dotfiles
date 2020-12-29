@@ -1,19 +1,13 @@
 # Navigation
-#alias ls="ls --color=auto"
 alias ls="exa --long --header --git --group"
 alias cat="bat --theme=GitHub"
 alias tree="exa --tree"
-alias ..="cd ..;"
 alias la="ls -lhA"
-alias rmr="rm -r"
-
-# Disable the lockup of doom from ctrl+s
-#stty -ixon
 
 # History
 HISTSIZE=50000
 HISTFILESIZE=50000
-HISTCONTROL=ignoreboth:erasedups
+HISTCONTROL=ignoreboth
 HISTIGNORE="ls:ll:cd:pwd:bg:fg:history"
 
 
@@ -29,7 +23,6 @@ if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
     done
 
     bind -x '"\C-r"':reset
-#elif [[ "${OSTYPE}" == "darwin"* ]]; then
 fi
 
 # Applications
@@ -83,27 +76,6 @@ function up() {
     cd $(printf '../%.0s' $(seq 1 $num))
 }
 
-# (f)ind by (n)ame
-# usage: fn foo
-# to find all files containing 'foo' in the name
-function fn() {
-	if [ $# -eq 2 ]; then
-		sudo find $1 -name $2
-	elif [ $# -eq 1 ]; then
-		find `pwd` -name $1
-    else
-        echo "(f)ind by (n)ame"
-        echo "usage: fn [name]"
-        echo "Where name is the file name to search for"
-	fi
-}
-
-# (f)ind (i)n (f)ile
-# usage: fif "text to search"
-function fif() {
-	rga $1 2>/dev/null
-}
-
 # Add color shortcuts
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
   c_reset=`tput sgr0`
@@ -154,11 +126,6 @@ kubectl_context() {
     fi
 }
 
-to_md() {
-    # Convert the input file to markdown and copy to the clipboard
-    pandoc ${1} -t gfm | xclip -selection clipboard
-}
-
 if [ "$BASH" != "" ]; then
     # Prompt
     PS1="\n╔ \w\$(git_prompt) \$(kubectl_context)\n╚ \h\$ "
@@ -167,7 +134,5 @@ if [ "$BASH" != "" ]; then
     if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
         . /etc/bash_completion
     fi
-#elif [ "$ZSH_NAME" != "" ]; then
 fi
 
-source <(navi widget bash)
