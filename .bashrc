@@ -13,16 +13,22 @@ alias rmr="rm -r"
 # History
 HISTSIZE=50000
 HISTFILESIZE=50000
-HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL=ignoreboth:erasedups
+HISTIGNORE="ls:ll:cd:pwd:bg:fg:history"
+
 
 if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
     # History
     shopt -s histappend
+    # append and reload the history after each command
+    PROMPT_COMMAND="history -a; history -n"
 
     for filename in ${HOME}/.ssh/*.pub; do
         keyname="$(basename ${filename} .pub)"
         eval $(keychain --nogui --eval --quiet ${keyname})
     done
+
+    bind -x '"\C-r"':reset
 #elif [[ "${OSTYPE}" == "darwin"* ]]; then
 fi
 
