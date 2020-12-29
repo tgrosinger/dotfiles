@@ -67,11 +67,6 @@ function performSetup() {
         mkdir bin
     fi
 
-    if [ ! -d .config ]; then
-        echo "Creating a .config directory..."
-        mkdir .config
-    fi
-
     echo "Linking shell configs..."
     linkFile ".bashrc"
     ln -fns ${REPO_DIR}/.bashrc .zshrc
@@ -89,10 +84,6 @@ function performSetup() {
 
     echo "Linking inputrc..."
     linkFile ".inputrc"
-
-    echo "Linking i3..."
-    linkFile ".i3"
-    linkFile ".i3status.conf"
 
     echo "Linking bin files"
     linkBin "${BIN_DIR}/exa-0.9.0" "exa"
