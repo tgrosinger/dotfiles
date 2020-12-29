@@ -80,10 +80,6 @@ function performSetup() {
     linkFile ".vim"
     linkFile ".vimrc"
 
-    echo "Linking spacemacs..."
-    echo "(note: you must install spacemacs separately)"
-    linkFile ".spacemacs"
-
     echo "Linking Git..."
     linkFile ".gitconfig"
     linkFile ".gitattributes"
@@ -98,13 +94,9 @@ function performSetup() {
     linkFile ".i3"
     linkFile ".i3status.conf"
 
-    echo "Linking navi cheatsheets..."
-    ln -fns ${REPO_DIR}/navi  .local/share/navi
-
     echo "Linking bin files"
     linkBin "${BIN_DIR}/exa-0.9.0" "exa"
     linkBin "${BIN_DIR}/bat-0.13.0" "bat"
-    linkBin "${BIN_DIR}/navi-2.5.1" "navi"
     linkBin "${BIN_DIR}/jq-1.6" "jq"
 
     echo "Linking scripts"
