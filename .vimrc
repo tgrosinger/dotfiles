@@ -1,5 +1,3 @@
-" vim: foldmethod=marker
-"
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall | source $MYVIMRC
@@ -9,9 +7,6 @@ call plug#begin()
 " Plug packages without settings {{{1
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'idanarye/vim-merginal'
-Plug 'godlygeek/tabular'
 
 " Improved Incremental Search
 Plug 'haya14busa/incsearch.vim'
@@ -23,18 +18,6 @@ let g:incsearch#auto_nohlsearch = 1 " Turn off search highlighting after moving
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
-
-" Fuzzy Search
-Plug 'haya14busa/incsearch-fuzzy.vim'
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
-
-" Python Autoformatting
-"Plug 'ambv/black'
-"let g:black_linelength = 80
-"let g:black_fast = 1
-"autocmd BufWritePost *.py execute ':Black'
 
 " Syntax Checking {{{1
 Plug 'vim-syntastic/syntastic'
@@ -105,15 +88,8 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'varcheck']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'ineffassign', 'megacheck', 'interfacer', 'maligned']
-"let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'varcheck', 'aligncheck', 'ineffassign', 'gosimple', 'staticcheck', 'interfacer', 'maligned']
 let g:go_metalinter_deadline = '20s'
 
-
-" Python Support {{{1
-Plug 'klen/python-mode'
-au FileType python let g:pymode_doc_bind = "<Leader>gb"
-au FileType python let g:pymode_rope_goto_definition_bind = "<Leader>gd"
-au FileType python let g:pymode_folding = 0
 
 call plug#end()
 filetype plugin indent on
@@ -137,23 +113,6 @@ set colorcolumn=+1
 
 set list                        " Highlight white-space characters
 set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " but only the ones we don't want
-
-" Tabs {{{1
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>tt :tabnext<cr>
 
 " Splits {{{1
 map <C-J> <C-W>j<C-W>_
@@ -207,12 +166,6 @@ xnoremap & :&&<CR>        " loses the flags, this fixes that.
 let g:clang_user_options='|| exit 0'
 
 set wildmenu                    " Show a menu rather than auto-completing
-" let mapleader = "\"           " Do not remap leader to , and instead use " default \
-" let g:mapleader = "\"
-
-" <Leader>e: Fast editing of the .vimrc
-nnoremap <Leader>e :e! ~/.dotfiles/.vimrc<cr>
-nnoremap <Leader>r :so ~/.dotfiles/.vimrc<cr>
 
 " autocompletion
 :inoremap <C-j> <Esc>/[)}"'\]>]<CR>:nohl<CR>a
@@ -222,6 +175,4 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
